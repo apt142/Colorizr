@@ -1,0 +1,36 @@
+{
+  "name": "apt142/Colorizr",
+  "description": "Colorizr REST Engine",
+  "homepage": "https://github.com/apt142/Colorizr",
+  "keywords": [
+    "rest",
+    "Colorizr"
+  ],
+  "license": "MIT",
+  "version": "2.0.1",
+  "authors": [
+    {
+      "name": "Cris Bettis",
+      "email": "apt142@apartment142.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/apt142/Colorizr/issues"
+  },
+  "minimum-stability": "dev",
+
+  "autoload": {
+    "psr-4": {"Colorizr\\": "src/"}
+  },
+
+  "require": {
+    "indeyets/pake": "~1.99",
+    "silex/silex": "~1.1"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "3.7.*",
+    "squizlabs/php_codesniffer": "1.*"
+  }
+}

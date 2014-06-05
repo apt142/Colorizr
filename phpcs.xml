@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="Colorizr">
+    <description>A coding standard based on PSR2</description>
+    <rule ref="PSR2"/>
+    <!-- Use Unix newlines -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+</ruleset>

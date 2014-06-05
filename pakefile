@@ -1,0 +1,29 @@
+<?php
+
+/** Task List */
+pake_desc('Run the unit tests');
+pake_task('test');
+
+
+pake_desc('PHP Lint the src folder');
+pake_task('lint');
+
+pake_desc('Display the version');
+pake_task('version');
+
+/** Run Functions */
+function run_version() {
+    $composer = json_decode(file_get_contents('composer.json'));
+    echo $composer->version . "\n";
+}
+
+function run_test() {
+    passthru("./vendor/phpunit/phpunit/phpunit.php");
+}
+
+function run_lint() {
+    echo "\n * Linting files\n";
+    passthru("./build/lint -R ./src");
+}
+
+/* End of pakefile */
