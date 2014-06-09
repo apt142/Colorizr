@@ -19,13 +19,11 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 // Setup the namespace for our own namespace
-$loader->add('Colorizr', __DIR__ );
+$loader->add('Colorizr', __DIR__ . '../Colorizr' );
 
 // Init Silex
 $app = new Silex\Application();
-
 $app['debug'] = true;
-
 
 // Path
 $app->get(
@@ -35,7 +33,6 @@ $app->get(
     }
 );
 
-
 $app->get(
     '/sizes',
     function() use($app) {
@@ -44,5 +41,16 @@ $app->get(
     }
 );
 
+$app->error(function (\Exception $e, $code) {
+    switch ($code) {
+        case 404:
+            $message = 'The requested page could not be found.';
+            break;
+        default:
+            $message = 'We are sorry, but something went terribly wrong.';
+    }
+
+    return new Response($message);
+});
 
 $app->run();
