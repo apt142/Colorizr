@@ -42,12 +42,10 @@ class Color {
      * @return \Colorizr\models\Color
      */
     public function __construct($red, $green, $blue, $alpha = null) {
-        $this->red = $red;
-        $this->green = $green;
-        $this->blue = $blue;
+        $this->red   = (int) round($red);
+        $this->green = (int) round($green);
+        $this->blue  = (int) round($blue);
         $this->alpha = $alpha;
-
-
     }
 
     /**
@@ -56,7 +54,8 @@ class Color {
      * @return string
      */
     public function toHex() {
-        return dechex($this->red) . dechex($this->green) . dechex($this->blue);
+        return dechex((int) $this->red) . dechex((int) $this->green)
+            . dechex((int) $this->blue);
     }
 
     /**
@@ -65,8 +64,8 @@ class Color {
      * @return string
      */
     public function toRGB() {
-        return 'rgb(' . $this->red . ',' . $this->green. ',' . $this->blue
-            . ')';
+        return 'rgb(' . (int) $this->red . ',' . (int) $this->green. ','
+            . (int) $this->blue . ')';
     }
 
     /**
@@ -75,7 +74,7 @@ class Color {
      * @return string
      */
     public function toRGBA() {
-        return 'rgba(' . $this->red . ',' . $this->green. ',' . $this->blue
-            . ',' . $this->alpha . ')';
+        return 'rgba(' . (int) $this->red . ',' . (int) $this->green. ','
+            . (int) $this->blue . ',' . $this->alpha . ')';
     }
 }

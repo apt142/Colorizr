@@ -19,7 +19,7 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 // Setup the namespace for our own namespace
-$loader->add('Colorizr', __DIR__ . '../Colorizr' );
+$loader->add('Colorizr', __DIR__ . '../src' );
 
 // Init Silex
 $app = new Silex\Application();

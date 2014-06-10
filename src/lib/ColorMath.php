@@ -42,25 +42,36 @@ class ColorMath {
       * @return \Colorizr\models\Color
       */
     public function set($colorString) {
-         $colorString = is_string($colorString) ? $colorString : '';
-         $colorString = strtolower($colorString);
-         $colorString = preg_replace("/[^0-9a-f]/", '', $colorString);
-         $red   = 0;
-         $green = 0;
-         $blue  = 0;
-         if (strlen($colorString) == 6) {
-             $colorVal = hexdec($colorString);
-             // Bitwise calculation
-             $red   = 0xFF & ($colorVal >> 0x10);
-             $green = 0xFF & ($colorVal >> 0x8);
-             $blue  = 0xFF & $colorVal;
-         } elseif (strlen($colorString) == 3) { //if shorthand notation, need some string manipulations
-             $red   = hexdec(str_repeat(substr($colorString, 0, 1), 2));
-             $green = hexdec(str_repeat(substr($colorString, 1, 1), 2));
-             $blue  = hexdec(str_repeat(substr($colorString, 2, 1), 2));
-         }
-         $this->color = new \Colorizr\models\Color($red, $green, $blue);
+         $this->color = $this->create($colorString);
          return $this->color;
+    }
+
+    /**
+     * Creates a new color object
+     *
+     * @param string|null $colorString Color String
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function create($colorString) {
+        $colorString = is_string($colorString) ? $colorString : '';
+        $colorString = strtolower($colorString);
+        $colorString = preg_replace("/[^0-9a-f]/", '', $colorString);
+        $red   = 0;
+        $green = 0;
+        $blue  = 0;
+        if (strlen($colorString) == 6) {
+            $colorVal = hexdec($colorString);
+            // Bitwise calculation
+            $red   = 0xFF & ($colorVal >> 0x10);
+            $green = 0xFF & ($colorVal >> 0x8);
+            $blue  = 0xFF & $colorVal;
+        } elseif (strlen($colorString) == 3) { //if shorthand notation, need some string manipulations
+            $red   = hexdec(str_repeat(substr($colorString, 0, 1), 2));
+            $green = hexdec(str_repeat(substr($colorString, 1, 1), 2));
+            $blue  = hexdec(str_repeat(substr($colorString, 2, 1), 2));
+        }
+        return new \Colorizr\models\Color($red, $green, $blue);
     }
 
 
@@ -90,6 +101,42 @@ class ColorMath {
         return $this->_multiplyColor($multiplier);
     }
 
+
+    /**
+     * Desaturates a Color
+     *
+     * @param string|null $colorString Color String
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function desaturate($colorString = null) {
+        if ($colorString == null) {
+            $color = $this->color;
+        } else {
+            $color = $this->create($colorString);
+        }
+        $desat = (int) round($color->red * 0.299
+            + $color->green * 0.587
+            + $color->blue * 0.114);
+        return new \Colorizr\models\Color($desat, $desat, $desat);
+    }
+
+    /**
+     * Saturates a color
+     *
+     * @param int $percent
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function saturate($percent) {
+        $percent = $this->_sanitizePercentage($percent) / 100.0;
+        $color2 = $this->desaturate();
+        $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
+        $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
+        $blue  = $percent * $this->color->blue + (1.0 - $percent) * $color2->blue;
+        return new \Colorizr\models\Color($red, $green, $blue);
+    }
+
     /**
      * Checks percent and returns a valid value
      *
@@ -100,9 +147,6 @@ class ColorMath {
     private function _sanitizePercentage($percent) {
         // Sanitize the bad inputs
         if (!is_numeric($percent)) {
-            $percent = 0;
-        }
-        if ($percent < 0) {
             $percent = 0;
         }
         return $percent;
@@ -117,9 +161,9 @@ class ColorMath {
      */
     private function _multiplyColor($multiplier) {
         $modColor = $this->color;
-        $red      = $modColor->red * $multiplier;
-        $green    = $modColor->green * $multiplier;
-        $blue     = $modColor->blue * $multiplier;
+        $red      = (int) round($modColor->red * $multiplier);
+        $green    = (int) round($modColor->green * $multiplier);
+        $blue     = (int) round($modColor->blue * $multiplier);
 
         $modColor->red   = ($red > 255) ? 255 : $red;
         $modColor->green = ($green > 255) ? 255 : $green;
