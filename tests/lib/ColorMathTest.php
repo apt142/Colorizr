@@ -90,12 +90,12 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Test the desaturate command
+     * Test the greyscale command
      */
-    public function testDesaturate() {
+    public function testGreyscale() {
         $colorMath = new ColorMath();
         $colorMath->set('#FA3');
-        $color = $colorMath->desaturate();
+        $color = $colorMath->greyscale();
         $this->assertTrue(
             $color->red == 182
             && $color->green == 182
@@ -114,6 +114,20 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
             $color->red == 219
             && $color->green == 176
             && $color->blue == 117
+        );
+    }
+
+    /**
+     * Test the saturate command
+     */
+    public function testDesaturate() {
+        $colorMath = new ColorMath();
+        $colorMath->set('#FA3');
+        $color = $colorMath->desaturate(50);
+        $this->assertTrue(
+            $color->red == 146
+            && $color->green == 188
+            && $color->blue == 248
         );
     }
 }

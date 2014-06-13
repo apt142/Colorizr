@@ -13,6 +13,7 @@
 
 namespace Colorizr\lib;
 
+use \Colorizr\models\Color;
 
 /**
  * Class ColorMath
@@ -71,7 +72,7 @@ class ColorMath {
             $green = hexdec(str_repeat(substr($colorString, 1, 1), 2));
             $blue  = hexdec(str_repeat(substr($colorString, 2, 1), 2));
         }
-        return new \Colorizr\models\Color($red, $green, $blue);
+        return new Color($red, $green, $blue);
     }
 
 
@@ -109,7 +110,7 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function desaturate($colorString = null) {
+    public function greyscale($colorString = null) {
         if ($colorString == null) {
             $color = $this->color;
         } else {
@@ -118,7 +119,7 @@ class ColorMath {
         $desat = (int) round($color->red * 0.299
             + $color->green * 0.587
             + $color->blue * 0.114);
-        return new \Colorizr\models\Color($desat, $desat, $desat);
+        return new Color($desat, $desat, $desat);
     }
 
     /**
@@ -130,11 +131,27 @@ class ColorMath {
      */
     public function saturate($percent) {
         $percent = $this->_sanitizePercentage($percent) / 100.0;
-        $color2 = $this->desaturate();
+        $color2 = $this->greyscale();
         $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
         $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
         $blue  = $percent * $this->color->blue + (1.0 - $percent) * $color2->blue;
-        return new \Colorizr\models\Color($red, $green, $blue);
+        return new Color($red, $green, $blue);
+    }
+
+    /**
+     * Desaturates a color
+     *
+     * @param int $percent
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function desaturate($percent) {
+        $percent = $this->_sanitizePercentage($percent) / 100.0 * -1;
+        $color2 = $this->greyscale();
+        $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
+        $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
+        $blue  = $percent * $this->color->blue + (1.0 - $percent) * $color2->blue;
+        return new Color($red, $green, $blue);
     }
 
     /**
