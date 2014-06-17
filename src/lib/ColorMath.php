@@ -28,6 +28,7 @@ use \Colorizr\models\Color;
  */
 class ColorMath {
 
+    /** @var \Colorizr\models\Color $color */
     private $color = null;
 
     public function __construct($colorString = null) {
@@ -155,6 +156,77 @@ class ColorMath {
     }
 
     /**
+     * Multiplies two colors together
+     *
+     * @param String $colorString
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function multiply($colorString) {
+        $color2 = $this->create($colorString);
+        return $this->_multiplyColors($this->color, $color2);
+    }
+
+    /**
+     * Multiplies two colors together
+     *
+     * @param String $colorString
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function screen($colorString) {
+        $color2 = $this->create($colorString);
+        $red    = $this->color->red;
+        $green  = $this->color->green;
+        $blue   = $this->color->blue;
+
+        $red2   = $color2->red;
+        $green2 = $color2->green;
+        $blue2  = $color2->blue;
+
+        return new \Colorizr\models\Color(
+            $red + $red2 - ($red * $red2) / 255,
+            $green + $green2 - ($green * $green2) / 255,
+            $blue + $blue2 - ($blue * $blue2) / 255
+        );
+    }
+
+    /**
+     * Overlays a color with a modifying color
+     *
+     * @param String $colorString Color String
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function overlay($colorString) {
+        $modifier = $this->create($colorString);
+        $product = new \Colorizr\models\Color(0, 0, 0);
+
+        foreach (array('red', 'green', 'blue') as $channel) {
+            if ($this->color->$channel < 128) {
+                $product->$channel = ($this->color->$channel
+                    * $modifier->$channel) / 255;
+            } else {
+                $product->$channel = $this->color->$channel
+                    + $modifier->$channel
+                    - ($this->color->$channel * $modifier->$channel) / 255;
+            }
+        }
+        return $product;
+    }
+
+    /**
+     * Creates a complimentary color
+     *
+     * @return $this
+     */
+    public function complimentary() {
+        $hsl = $this->color->toHSL();
+        $h = ($hsl->h + 180);
+        return $this->color->fromHSL($h, $hsl->s, $hsl->l);
+    }
+
+    /**
      * Checks percent and returns a valid value
      *
      * @param mixed $percent Percent to
@@ -186,5 +258,21 @@ class ColorMath {
         $modColor->green = ($green > 255) ? 255 : $green;
         $modColor->blue  = ($blue > 255) ? 255 : $blue;
         return $modColor;
+    }
+
+    /**
+     * Multiply two colors together
+     *
+     * @param Color $base      Base Color
+     * @param Color $secondary Secondary Color
+     *
+     * @return \Colorizr\models\Color
+     */
+    private function _multiplyColors($base, $secondary) {
+        return new \Colorizr\models\Color(
+            ($base->red * $secondary->red) / 255,
+            ($base->green * $secondary->green) / 255,
+            ($base->blue * $secondary->blue) / 255
+        );
     }
 }

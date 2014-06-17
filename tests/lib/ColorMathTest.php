@@ -130,4 +130,45 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
             && $color->blue == 248
         );
     }
+
+    /**
+     * Test the multiply command
+     */
+    public function testMultiply() {
+        $colorMath = new ColorMath();
+        $colorMath->set('#ff6600');
+        $color = $colorMath->multiply('#999999');
+        $this->assertSame('993d00', $color->toHex());
+    }
+
+    /**
+     * Test the multiply command
+     */
+    public function testScreen() {
+        $colorMath = new ColorMath();
+        $colorMath->set('#ff6600');
+        $color = $colorMath->screen('#999999');
+        $this->assertSame('ffc299', $color->toHex());
+    }
+
+    /**
+     * Test the multiply command
+     */
+    public function testOverlay() {
+        $colorMath = new ColorMath();
+        $colorMath->set('#ff6600');
+        $color = $colorMath->overlay('#999999');
+        $this->assertSame('ff3d00', $color->toHex());
+    }
+
+    /**
+     * Test the complimentary
+     */
+    public function testComplimentary() {
+        $colorMath = new ColorMath();
+        $colorMath->set('#ff6600');
+        $color = $colorMath->complimentary();
+        $this->assertSame('0099ff', $color->toHex());
+    }
+
 }
