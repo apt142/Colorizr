@@ -34,10 +34,13 @@ $app->get(
 );
 
 $app->get(
-    '/sizes',
+    '/complimentary/:colorString',
     function() use($app) {
-        $size = new Colorizr\controllers\Sizes();
-        return json_encode($size->get_sizes());
+        $controller = new Colorizr\controllers\colorFunctions(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return json_encode($controller->complimentary($colorString));
     }
 );
 

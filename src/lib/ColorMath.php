@@ -120,6 +120,10 @@ class ColorMath {
         $desat = (int) round($color->red * 0.299
             + $color->green * 0.587
             + $color->blue * 0.114);
+        /* $desat = (int) round($color->red
+            + $color->green
+            + $color->blue);
+        */
         return new Color($desat, $desat, $desat);
     }
 
@@ -185,9 +189,9 @@ class ColorMath {
         $blue2  = $color2->blue;
 
         return new \Colorizr\models\Color(
-            $red + $red2 - ($red * $red2) / 255,
-            $green + $green2 - ($green * $green2) / 255,
-            $blue + $blue2 - ($blue * $blue2) / 255
+            $this->_screenChannel($red, $red2),
+            $this->_screenChannel($green, $green2),
+            $this->_screenChannel($blue, $blue2)
         );
     }
 
@@ -203,13 +207,17 @@ class ColorMath {
         $product = new \Colorizr\models\Color(0, 0, 0);
 
         foreach (array('red', 'green', 'blue') as $channel) {
-            if ($this->color->$channel < 128) {
-                $product->$channel = ($this->color->$channel
-                    * $modifier->$channel) / 255;
+            if ($this->color->$channel >= 128) {
+                $product->$channel = $this->_screenChannel(
+                    $this->color->$channel,
+                    $modifier->$channel
+                );
             } else {
-                $product->$channel = $this->color->$channel
-                    + $modifier->$channel
-                    - ($this->color->$channel * $modifier->$channel) / 255;
+                $product->$channel = $this->_multiplyChannel(
+                    $this->color->$channel * 2,
+                    $modifier->$channel
+                );
+
             }
         }
         return $product;
@@ -242,7 +250,7 @@ class ColorMath {
     }
 
     /**
-     * Multiplies a color
+     * Multiplies each channel in a color by a base amount
      *
      * @param float $multiplier Multiplier
      *
@@ -261,18 +269,42 @@ class ColorMath {
     }
 
     /**
+     * Screen Calculation
+     *
+     * @param int $base Base channel color
+     * @param int $mod  Color channel modifying it
+     *
+     * @return int
+     */
+    private function _screenChannel($base, $mod) {
+        return $base + $mod - ($base * $mod) / 255;
+    }
+
+    /**
+     * Multiply Calculation
+     *
+     * @param int $base Base channel color
+     * @param int $mod  Color channel modifying it
+     *
+     * @return int
+     */
+    private function _multiplyChannel($base, $mod) {
+        return ($base * $mod) / 255;
+    }
+
+    /**
      * Multiply two colors together
      *
      * @param Color $base      Base Color
-     * @param Color $secondary Secondary Color
+     * @param Color $modifier Secondary Color
      *
      * @return \Colorizr\models\Color
      */
-    private function _multiplyColors($base, $secondary) {
+    private function _multiplyColors($base, $modifier) {
         return new \Colorizr\models\Color(
-            ($base->red * $secondary->red) / 255,
-            ($base->green * $secondary->green) / 255,
-            ($base->blue * $secondary->blue) / 255
+            $this->_multiplyChannel($base->red, $modifier->red),
+            $this->_multiplyChannel($base->green, $modifier->green),
+            $this->_multiplyChannel($base->blue, $modifier->blue)
         );
     }
 }
