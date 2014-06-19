@@ -35,9 +35,9 @@ class Color {
      * @param \Silex\Application      &$app      Silex Application
      * @param \Colorizr\lib\ColorMath $colorMath ColorMath Library
      *
-     * @return void
+     * @return \Colorizr\controllers\Color
      */
-    public function init(&$app, $colorMath) {
+    public function __construct(&$app, $colorMath) {
         $this->_app = $app;
         $this->_colorMath = $colorMath;
     }
@@ -55,10 +55,26 @@ class Color {
             $this->_colorMath->set($colorString);
             $compliment = $this->_colorMath->complimentary();
             $result = array(
-                'result' => $compliment->toRGB()
+                'compliment' => $compliment->toHex()
             );
         }
         return $result;
+    }
+
+    /**
+     * Action to deliver random color
+     *
+     * @return array
+     */
+    public function random() {
+        $color = new \Colorizr\models\Color(
+            rand(0, 255),
+            rand(0, 255),
+            rand(0, 255)
+        );
+        return array(
+            'color' => $color->toHex()
+        );
     }
 
     /**

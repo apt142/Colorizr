@@ -6,15 +6,25 @@ Colorizer is a simple REST API for retrieving color choices and performing some 
 
 End Points:
 
+get: /complimentary/f00 => {"compliment":"00ffff"}
+get: /random => {'color':'random_hex_color'}
+
 
 ### TODO:
 
-get: /randomcolor
-// Random Color
-
-get: /everycolor
 // The latest color tweeted by everycolor
+get: /everycolor
 
-post: /darken/?color=:color&percent=:percent
 // Darkens a color
+get: /darken/{color}/{percent}
 
+// Lightens a color
+get: /lighten/{color}/{percent}
+
+Saturate
+Desaturate
+Greyscale
+Overlay
+Multiply
+Screen
+Help

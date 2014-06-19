@@ -15,6 +15,8 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
     exit("\nPlease run `composer install` to install dependencies.\n\n");
 }
 
+$mode = 'debug';
+
 // Bootstrap our application with the Composer autoloader
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
@@ -34,9 +36,9 @@ $app->get(
 );
 
 $app->get(
-    '/complimentary/:colorString',
-    function() use($app) {
-        $controller = new Colorizr\controllers\colorFunctions(
+    '/complimentary/{colorString}',
+    function($colorString) use($app) {
+        $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
         );
@@ -44,16 +46,31 @@ $app->get(
     }
 );
 
-$app->error(function (\Exception $e, $code) {
+$app->get(
+    '/random',
+    function() use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return json_encode($controller->random());
+    }
+);
+
+$app->error(function (\Exception $e, $code) use ($mode) {
     switch ($code) {
         case 404:
             $message = 'The requested page could not be found.';
             break;
         default:
-            $message = 'We are sorry, but something went terribly wrong.';
+            if ($mode == 'debug') {
+                $message = $e->getMessage();
+            } else {
+                $message = 'We are sorry, but something went terribly wrong.';
+            }
     }
 
-    return new Response($message);
+    return json_encode(array('error' => $message));
 });
 
 $app->run();
