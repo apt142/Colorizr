@@ -171,12 +171,12 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Test the complimentary
+     * Test the complementary
      */
     public function testComplimentary() {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
-        $color = $colorMath->complimentary();
+        $color = $colorMath->complementary();
         $this->assertSame('0099ff', $color->toHex());
     }
 

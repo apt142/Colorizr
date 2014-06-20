@@ -49,6 +49,15 @@ class ColorMath {
     }
 
     /**
+     * Returns base color
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function base() {
+        return $this->color;
+    }
+
+    /**
      * Creates a new color object
      *
      * @param string|null $colorString Color String
@@ -224,14 +233,26 @@ class ColorMath {
     }
 
     /**
-     * Creates a complimentary color
+     * Creates a complementary color
      *
-     * @return $this
+     * @return \Colorizr\models\Color
      */
-    public function complimentary() {
-        $hsl = $this->color->toHSL();
-        $h = ($hsl->h + 180);
-        return $this->color->fromHSL($h, $hsl->s, $hsl->l);
+    public function complementary() {
+        return $this->hueShift(180);
+    }
+
+    /**
+     * Shifts the hue by a degree
+     *
+     * @param int $degree Degree to shift 0 - 360
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function hueShift($degree) {
+        $color = $this->cloneColor($this->color);
+        $hsl = $color->toHSL();
+        $h = ($hsl->h + $degree);
+        return $color->fromHSL($h, $hsl->s, $hsl->l);
     }
 
     /**
@@ -305,6 +326,21 @@ class ColorMath {
             $this->_multiplyChannel($base->red, $modifier->red),
             $this->_multiplyChannel($base->green, $modifier->green),
             $this->_multiplyChannel($base->blue, $modifier->blue)
+        );
+    }
+
+    /**
+     * Clones a color
+     *
+     * @param \Colorizr\models\Color $color Color
+     *
+     * @return \Colorizr\models\Color
+     */
+    public function cloneColor($color) {
+         return new \Colorizr\models\Color(
+            $color->red,
+            $color->green,
+            $color->blue
         );
     }
 }

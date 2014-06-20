@@ -158,7 +158,7 @@ class Color {
      * @return $this
      */
     public function fromHSL($h, $s, $l) {
-        $h = $h / 360.0;
+        $h = ($h % 360) / 360.0;
         $s = $s / 100.0;
         $l = $l / 100.0;
 
