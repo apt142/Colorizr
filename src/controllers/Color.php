@@ -24,10 +24,10 @@ namespace Colorizr\controllers;
  */
 
 class Color {
-    /** @var \Silex\Application $_app */
-    private $_app;
-    /** @var \Colorizr\lib\ColorMath $_colorMath */
-    private $_colorMath;
+    /** @var \Silex\Application $app */
+    private $app;
+    /** @var \Colorizr\lib\ColorMath $colorMath */
+    private $colorMath;
 
     /**
      * Constructor
@@ -38,8 +38,8 @@ class Color {
      * @return \Colorizr\controllers\Color
      */
     public function __construct(&$app, $colorMath) {
-        $this->_app = $app;
-        $this->_colorMath = $colorMath;
+        $this->app = $app;
+        $this->colorMath = $colorMath;
     }
 
     /**
@@ -51,10 +51,10 @@ class Color {
      */
     public function complementary($colorString) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $base       = $this->_colorMath->base();
-            $compliment = $this->_colorMath->complementary();
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $base       = $this->colorMath->base();
+            $compliment = $this->colorMath->complementary();
             $result = array(
                 'base'       => $base->toHex(),
                 'compliment' => $compliment->toHex()
@@ -73,11 +73,11 @@ class Color {
      */
     public function adjacent($colorString, $shift = 30) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $base = $this->_colorMath->base();
-            $left = $this->_colorMath->hueShift(360 - $shift);
-            $right = $this->_colorMath->hueShift($shift);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $base = $this->colorMath->base();
+            $left = $this->colorMath->hueShift(360 - $shift);
+            $right = $this->colorMath->hueShift($shift);
             $result = array(
                 'base'  => $base->toHex(),
                 'left'  => $left->toHex(),
@@ -97,11 +97,11 @@ class Color {
      */
     public function triad($colorString,  $shift = 30) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $base = $this->_colorMath->base();
-            $left = $this->_colorMath->hueShift(180 + $shift);
-            $right = $this->_colorMath->hueShift(180 - $shift);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $base = $this->colorMath->base();
+            $left = $this->colorMath->hueShift(180 + $shift);
+            $right = $this->colorMath->hueShift(180 - $shift);
             $result = array(
                 'base'  => $base->toHex(),
                 'left'  => $left->toHex(),
@@ -121,12 +121,12 @@ class Color {
      */
     public function quadtrad($colorString, $shift = 30) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $base   = $this->_colorMath->base();
-            $second = $this->_colorMath->hueShift($shift);
-            $third  = $this->_colorMath->hueShift(180);
-            $fourth = $this->_colorMath->hueShift(180 + $shift);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $base   = $this->colorMath->base();
+            $second = $this->colorMath->hueShift($shift);
+            $third  = $this->colorMath->hueShift(180);
+            $fourth = $this->colorMath->hueShift(180 + $shift);
             $result = array(
                 'base'   => $base->toHex(),
                 'second' => $second->toHex(),
@@ -147,11 +147,11 @@ class Color {
      */
     public function overlay($colorString, $filter) {
         $result = null;
-        if ($this->_validateColorString($colorString)
-            && $this->_validateColorString($filter)
+        if ($this->validateColorString($colorString)
+            && $this->validateColorString($filter)
         ) {
-            $this->_colorMath->set($colorString);
-            $color = $this->_colorMath->overlay($filter);
+            $this->colorMath->set($colorString);
+            $color = $this->colorMath->overlay($filter);
 
             $result = array(
                 'result'   => $color->toHex()
@@ -170,11 +170,11 @@ class Color {
      */
     public function multiply($colorString, $filter) {
         $result = null;
-        if ($this->_validateColorString($colorString)
-            && $this->_validateColorString($filter)
+        if ($this->validateColorString($colorString)
+            && $this->validateColorString($filter)
         ) {
-            $this->_colorMath->set($colorString);
-            $color = $this->_colorMath->multiply($filter);
+            $this->colorMath->set($colorString);
+            $color = $this->colorMath->multiply($filter);
 
             $result = array(
                 'result'   => $color->toHex()
@@ -193,11 +193,11 @@ class Color {
      */
     public function screen($colorString, $filter) {
         $result = null;
-        if ($this->_validateColorString($colorString)
-            && $this->_validateColorString($filter)
+        if ($this->validateColorString($colorString)
+            && $this->validateColorString($filter)
         ) {
-            $this->_colorMath->set($colorString);
-            $color = $this->_colorMath->screen($filter);
+            $this->colorMath->set($colorString);
+            $color = $this->colorMath->screen($filter);
 
             $result = array(
                 'result'   => $color->toHex()
@@ -224,9 +224,9 @@ class Color {
      */
     public function greyscale($colorString) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $compliment = $this->_colorMath->greyscale();
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $compliment = $this->colorMath->greyscale();
             $result = array(
                 'result' => $compliment->toHex()
             );
@@ -244,9 +244,9 @@ class Color {
      */
     public function lighten($colorString, $percent) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $compliment = $this->_colorMath->lighten($percent);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $compliment = $this->colorMath->lighten($percent);
             $result = array(
                 'result' => $compliment->toHex()
             );
@@ -264,9 +264,9 @@ class Color {
      */
     public function darken($colorString, $percent) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $compliment = $this->_colorMath->darken($percent);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $compliment = $this->colorMath->darken($percent);
             $result = array(
                 'result' => $compliment->toHex()
             );
@@ -284,9 +284,9 @@ class Color {
      */
     public function saturate($colorString, $percent) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $compliment = $this->_colorMath->saturate($percent);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $compliment = $this->colorMath->saturate($percent);
             $result = array(
                 'result' => $compliment->toHex()
             );
@@ -304,9 +304,9 @@ class Color {
      */
     public function desaturate($colorString, $percent) {
         $result = null;
-        if ($this->_validateColorString($colorString)) {
-            $this->_colorMath->set($colorString);
-            $compliment = $this->_colorMath->desaturate($percent);
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $compliment = $this->colorMath->desaturate($percent);
             $result = array(
                 'result' => $compliment->toHex()
             );
@@ -337,7 +337,7 @@ class Color {
      *
      * @return bool
      */
-    private function _validateColorString($colorString = '') {
+    private function validateColorString($colorString = '') {
         return true;
     }
 }

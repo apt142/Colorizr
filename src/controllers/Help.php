@@ -25,7 +25,7 @@ namespace Colorizr\controllers;
 
 class Help {
     /** @var \Silex\Application $_app */
-    private $_app;
+    private $app;
 
     /**
      * Constructor
@@ -35,7 +35,7 @@ class Help {
      * @return \Colorizr\controllers\Help
      */
     public function __construct(&$app) {
-        $this->_app = $app;
+        $this->app = $app;
     }
 
     /**
@@ -70,5 +70,4 @@ class Help {
         );
         return $result;
     }
-
 }

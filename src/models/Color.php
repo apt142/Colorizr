@@ -54,9 +54,9 @@ class Color {
      * @return string
      */
     public function toHex() {
-        return $this->_TwoCharHex($this->red)
-            . $this->_TwoCharHex($this->green)
-            . $this->_TwoCharHex($this->blue);
+        return $this->twoCharHex($this->red)
+            . $this->twoCharHex($this->green)
+            . $this->twoCharHex($this->blue);
     }
 
     /**
@@ -66,7 +66,7 @@ class Color {
      *
      * @return string
      */
-    private function _TwoCharHex($int) {
+    private function twoCharHex($int) {
         $int = dechex((int) round($int));
         $int = strlen($int) == 1
             ? '0' . $int

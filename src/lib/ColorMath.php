@@ -31,6 +31,13 @@ class ColorMath {
     /** @var \Colorizr\models\Color $color */
     private $color = null;
 
+    /**
+     * Constructor
+     *
+     * @param string|null $colorString Color String
+     *
+     * @return \Colorizr\lib\ColorMath
+     */
     public function __construct($colorString = null) {
          $this->set($colorString);
 
@@ -94,9 +101,9 @@ class ColorMath {
      * @return \Colorizr\models\Color
      */
     public function darken($percent) {
-        $percent    = $this->_sanitizePercentage($percent);
+        $percent    = $this->sanitizePercentage($percent);
         $mulitplier = (100 - $percent) / 100.0;
-        return $this->_multiplyColor($mulitplier);
+        return $this->multiplyColor($mulitplier);
     }
 
     /**
@@ -107,9 +114,9 @@ class ColorMath {
      * @return \Colorizr\models\Color
      */
     public function lighten($percent) {
-        $percent    = $this->_sanitizePercentage($percent);
+        $percent    = $this->sanitizePercentage($percent);
         $multiplier = (100 + $percent) / 100.0;
-        return $this->_multiplyColor($multiplier);
+        return $this->multiplyColor($multiplier);
     }
 
 
@@ -126,13 +133,13 @@ class ColorMath {
         } else {
             $color = $this->create($colorString);
         }
-        $desat = (int) round($color->red * 0.299
+        /* Weighted per visual impact */
+        $desat = (int) round(
+            $color->red * 0.299
             + $color->green * 0.587
-            + $color->blue * 0.114);
-        /* $desat = (int) round($color->red
-            + $color->green
-            + $color->blue);
-        */
+            + $color->blue * 0.114
+        );
+
         return new Color($desat, $desat, $desat);
     }
 
@@ -144,7 +151,7 @@ class ColorMath {
      * @return \Colorizr\models\Color
      */
     public function saturate($percent) {
-        $percent = $this->_sanitizePercentage($percent) / 100.0;
+        $percent = $this->sanitizePercentage($percent) / 100.0;
         $color2 = $this->greyscale();
         $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
         $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
@@ -160,7 +167,7 @@ class ColorMath {
      * @return \Colorizr\models\Color
      */
     public function desaturate($percent) {
-        $percent = $this->_sanitizePercentage($percent) / 100.0 * -1;
+        $percent = $this->sanitizePercentage($percent) / 100.0 * -1;
         $color2 = $this->greyscale();
         $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
         $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
@@ -177,7 +184,7 @@ class ColorMath {
      */
     public function multiply($colorString) {
         $color2 = $this->create($colorString);
-        return $this->_multiplyColors($this->color, $color2);
+        return $this->multiplyColors($this->color, $color2);
     }
 
     /**
@@ -198,9 +205,9 @@ class ColorMath {
         $blue2  = $color2->blue;
 
         return new \Colorizr\models\Color(
-            $this->_screenChannel($red, $red2),
-            $this->_screenChannel($green, $green2),
-            $this->_screenChannel($blue, $blue2)
+            $this->screenChannel($red, $red2),
+            $this->screenChannel($green, $green2),
+            $this->screenChannel($blue, $blue2)
         );
     }
 
@@ -217,12 +224,12 @@ class ColorMath {
 
         foreach (array('red', 'green', 'blue') as $channel) {
             if ($this->color->$channel >= 128) {
-                $product->$channel = $this->_screenChannel(
+                $product->$channel = $this->screenChannel(
                     $this->color->$channel,
                     $modifier->$channel
                 );
             } else {
-                $product->$channel = $this->_multiplyChannel(
+                $product->$channel = $this->multiplyChannel(
                     $this->color->$channel * 2,
                     $modifier->$channel
                 );
@@ -262,7 +269,7 @@ class ColorMath {
      *
      * @return int
      */
-    private function _sanitizePercentage($percent) {
+    private function sanitizePercentage($percent) {
         // Sanitize the bad inputs
         if (!is_numeric($percent)) {
             $percent = 0;
@@ -277,7 +284,7 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    private function _multiplyColor($multiplier) {
+    private function multiplyColor($multiplier) {
         $modColor = $this->color;
         $red      = (int) round($modColor->red * $multiplier);
         $green    = (int) round($modColor->green * $multiplier);
@@ -297,7 +304,7 @@ class ColorMath {
      *
      * @return int
      */
-    private function _screenChannel($base, $mod) {
+    private function screenChannel($base, $mod) {
         return $base + $mod - ($base * $mod) / 255;
     }
 
@@ -309,7 +316,7 @@ class ColorMath {
      *
      * @return int
      */
-    private function _multiplyChannel($base, $mod) {
+    private function multiplyChannel($base, $mod) {
         return ($base * $mod) / 255;
     }
 
@@ -321,11 +328,11 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    private function _multiplyColors($base, $modifier) {
+    private function multiplyColors($base, $modifier) {
         return new \Colorizr\models\Color(
-            $this->_multiplyChannel($base->red, $modifier->red),
-            $this->_multiplyChannel($base->green, $modifier->green),
-            $this->_multiplyChannel($base->blue, $modifier->blue)
+            $this->multiplyChannel($base->red, $modifier->red),
+            $this->multiplyChannel($base->green, $modifier->green),
+            $this->multiplyChannel($base->blue, $modifier->blue)
         );
     }
 
@@ -337,7 +344,7 @@ class ColorMath {
      * @return \Colorizr\models\Color
      */
     public function cloneColor($color) {
-         return new \Colorizr\models\Color(
+        return new \Colorizr\models\Color(
             $color->red,
             $color->green,
             $color->blue
