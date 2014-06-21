@@ -3,11 +3,11 @@
   "description": "Colorizr REST Engine",
   "homepage": "https://github.com/apt142/Colorizr",
   "keywords": [
-    "rest",
+    "REST",
     "Colorizr"
   ],
   "license": "MIT",
-  "version": "2.0.1",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "Cris Bettis",
@@ -26,7 +26,8 @@
 
   "require": {
     "indeyets/pake": "~1.99",
-    "silex/silex": "~1.1"
+    "silex/silex": "~1.1",
+    "j7mbo/twitter-api-php": "dev-master"
   },
 
   "require-dev": {

@@ -55,6 +55,9 @@ class Help {
                 '/darken/{colorString}/{percent}' => 'Returns a darker color',
                 '/saturate/{colorString}/{percent}' => 'Returns a saturated color',
                 '/desaturate/{colorString}/{percent}' => 'Returns a desaturated color',
+                '/overlay/{colorString}/{modifierColor}' => 'Returns the overlay product of the two colors',
+                '/multiply/{colorString}/{modifierColor}' => 'Returns the multiply product of the two colors',
+                '/screen/{colorString}/{modifierColor}' => 'Returns the screen product of the two colors',
                 '/random' => 'Returns a random color'
             ),
             'POST'   => array(),

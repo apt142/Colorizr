@@ -138,6 +138,84 @@ class Color {
     }
 
     /**
+     * Action to deliver an overlay
+     *
+     * @param string $colorString A color string
+     * @param string $filter      A color string
+     *
+     * @return array
+     */
+    public function overlay($colorString, $filter) {
+        $result = null;
+        if ($this->_validateColorString($colorString)
+            && $this->_validateColorString($filter)
+        ) {
+            $this->_colorMath->set($colorString);
+            $color = $this->_colorMath->overlay($filter);
+
+            $result = array(
+                'result'   => $color->toHex()
+            );
+        }
+        return $result;
+    }
+
+    /**
+     * Action to deliver an multiply of two colors
+     *
+     * @param string $colorString A color string
+     * @param string $filter      A color string
+     *
+     * @return array
+     */
+    public function multiply($colorString, $filter) {
+        $result = null;
+        if ($this->_validateColorString($colorString)
+            && $this->_validateColorString($filter)
+        ) {
+            $this->_colorMath->set($colorString);
+            $color = $this->_colorMath->multiply($filter);
+
+            $result = array(
+                'result'   => $color->toHex()
+            );
+        }
+        return $result;
+    }
+
+    /**
+     * Action to deliver an screen of two colors
+     *
+     * @param string $colorString A color string
+     * @param string $filter      A color string
+     *
+     * @return array
+     */
+    public function screen($colorString, $filter) {
+        $result = null;
+        if ($this->_validateColorString($colorString)
+            && $this->_validateColorString($filter)
+        ) {
+            $this->_colorMath->set($colorString);
+            $color = $this->_colorMath->screen($filter);
+
+            $result = array(
+                'result'   => $color->toHex()
+            );
+        }
+        return $result;
+    }
+
+    /**
+     * Action to deliver the latest tweeted color of @everycolor
+     *
+     * @return array
+     */
+    public function everyColor() {
+
+    }
+
+    /**
      * Action to deliver the greyscale of a color
      *
      * @param string $colorString A color string

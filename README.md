@@ -18,16 +18,16 @@ End Points:
  * get: /triad/{color}
  * get: /quadtrad/{color}
 
+ * get: /overlay/{color}/{filtercolor}
+ * get: /multiply/{color}/{filtercolor}
+ * get: /screen/{color}/{filtercolor}
+
  * get: /help, / => Help message/Resource list
 
 ## TODO:
 
  // The latest color tweeted by everycolor
  * get: /everycolor
-
- * get: /overlay/{color}/{filtercolor}
- * get: /multiply/{color}/{filtercolor}
- * get: /screen/{color}/{filtercolor}
 
 ## Demo:
  http://colorizr.apartment142.com

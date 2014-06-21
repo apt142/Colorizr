@@ -59,6 +59,17 @@ $app->get(
 );
 
 $app->get(
+    '/complementary/{colorString}/{degree}',
+    function($colorString, $degree) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->complementary($colorString, $degree));
+    }
+);
+
+$app->get(
     '/adjacent/{colorString}',
     function($colorString) use($app) {
         $controller = new Colorizr\controllers\Color(
@@ -66,6 +77,17 @@ $app->get(
             new \Colorizr\lib\ColorMath()
         );
         return $app->json($controller->adjacent($colorString));
+    }
+);
+
+$app->get(
+    '/adjacent/{colorString}/{degree}',
+    function($colorString, $degree) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->adjacent($colorString, $degree));
     }
 );
 
@@ -81,6 +103,17 @@ $app->get(
 );
 
 $app->get(
+    '/triad/{colorString}/{degree}',
+    function($colorString, $degree) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->triad($colorString, $degree));
+    }
+);
+
+$app->get(
     '/quadtrad/{colorString}',
     function($colorString) use($app) {
         $controller = new Colorizr\controllers\Color(
@@ -88,6 +121,50 @@ $app->get(
             new \Colorizr\lib\ColorMath()
         );
         return $app->json($controller->quadtrad($colorString));
+    }
+);
+
+$app->get(
+    '/quadtrad/{colorString}/{degree}',
+    function($colorString, $degree) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->quadtrad($colorString, $degree));
+    }
+);
+
+$app->get(
+    '/overlay/{colorString}/{filterColor}',
+    function($colorString, $filterColor) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->overlay($colorString, $filterColor));
+    }
+);
+
+$app->get(
+    '/multiply/{colorString}/{filterColor}',
+    function($colorString, $filterColor) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->multiply($colorString, $filterColor));
+    }
+);
+
+$app->get(
+    '/screen/{colorString}/{filterColor}',
+    function($colorString, $filterColor) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->screen($colorString, $filterColor));
     }
 );
 
