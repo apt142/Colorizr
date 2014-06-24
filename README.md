@@ -1,4 +1,6 @@
 #Colorizr
+[![Build Status](https://travis-ci.org/apt142/Colorizr.svg?branch=master)](https://travis-ci.org/apt142/Colorizr)
+
 
 Colorizer is a simple REST API for retrieving color choices and performing some simple color functions.
 
