@@ -6,7 +6,7 @@
  *
  * @category Colorizr
  * @package  Colorizr
- * @author   Cris Bettis <cris.bettis@bettercarpeople.com>
+ * @author   Cris Bettis <apt142@apartment142.com>
  * @license  CC BY-NC-SA http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
 

@@ -4,11 +4,11 @@
  *
  * PHP version 5.3
  *
- * @category Graphite
- * @package  Core
- * @author   Cris Bettis <cris.bettis@bettercarpeople.com>
+ * @category Colorizr
+ * @package default
+ * @author   Cris Bettis <apt142@apartment142.com>
  * @license  CC BY-NC-SA http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @link     http://g.lonefry.com
+ * @link     http://apartment142.com
  */
 
 namespace Colorizr\lib;
@@ -21,10 +21,10 @@ use \Colorizr\models\Color;
  * Computes operations on a color.
  *
  * @category Colorizr\lib
- * @package  Core
- * @author   Cris Bettis <cris.bettis@bettercarpeople.com>
+ * @package default
+ * @author   Cris Bettis <apt142@apartment142.com>
  * @license  CC BY-NC-SA http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @link     http://g.lonefry.com
+ * @link     http://apartment142.com
  */
 class ColorMath {
 

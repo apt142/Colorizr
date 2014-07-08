@@ -4,11 +4,11 @@
  *
  * PHP version 5.3
  *
- * @category Graphite
- * @package  Core
- * @author   Cris Bettis <cris.bettis@bettercarpeople.com>
+ * @category Colorizr
+ * @package default
+ * @author   Cris Bettis <apt142@apartment142.com>
  * @license  CC BY-NC-SA http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @link     http://g.lonefry.com
+ * @link     http://apartment142.com
  */
 
 namespace tests\lib;
@@ -21,10 +21,10 @@ use Colorizr\lib\ColorMath;
  * What does this class do?
  *
  * @category tests\lib
- * @package  Core
- * @author   Cris Bettis <cris.bettis@bettercarpeople.com>
+ * @package default
+ * @author   Cris Bettis <apt142@apartment142.com>
  * @license  CC BY-NC-SA http://creativecommons.org/licenses/by-nc-sa/3.0/
- * @link     http://g.lonefry.com
+ * @link     http://apartment142.com
  */
 class ColorMathTest extends \PHPUnit_Framework_TestCase {
 
