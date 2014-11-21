@@ -235,6 +235,27 @@ class Color {
     }
 
     /**
+     * Action to deliver the greyscale of a color
+     *
+     * @param string $colorString A color string
+     * @param int    $normal      0-255 number to change brightness of a number
+     *
+     * @return array
+     */
+    public function normalize($colorString, $normal = 128) {
+        $result = null;
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+            $compliment = dechex($normal) . dechex($normal) . dechex($normal);
+            $normalized = $this->colorMath->overlay($compliment);
+            $result = array(
+                'result' => $normalized->toHex()
+            );
+        }
+        return $result;
+    }
+
+    /**
      * Returns a lightened color
      *
      * @param string $colorString A color string

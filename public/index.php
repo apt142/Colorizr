@@ -191,6 +191,18 @@ $app->get(
     }
 );
 
+// In case they want to spell it the other way
+$app->get(
+    '/normalize/{colorString}/{$intensity}',
+    function($colorString, $intensity) use($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->normalize($colorString, $intensity));
+    }
+);
+
 $app->get(
     '/lighten/{colorString}/{percent}',
     function($colorString, $percent) use($app) {
