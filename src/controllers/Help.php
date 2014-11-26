@@ -34,7 +34,8 @@ class Help {
      *
      * @return \Colorizr\controllers\Help
      */
-    public function __construct(&$app) {
+    public function __construct(&$app)
+    {
         $this->app = $app;
     }
 
@@ -43,7 +44,8 @@ class Help {
      *
      * @return array
      */
-    public function help() {
+    public function help()
+    {
         $result = array(
             'GET'    => array(
                 '/complementary/{colorString}' => 'Returns a complementary color',

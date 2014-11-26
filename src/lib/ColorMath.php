@@ -38,7 +38,8 @@ class ColorMath {
      *
      * @return \Colorizr\lib\ColorMath
      */
-    public function __construct($colorString = null) {
+    public function __construct($colorString = null)
+    {
          $this->set($colorString);
 
     }
@@ -50,8 +51,9 @@ class ColorMath {
       *
       * @return \Colorizr\models\Color
       */
-    public function set($colorString) {
-         $this->color = $this->create($colorString);
+    public function set($colorString)
+    {
+         $this->color = new Color($colorString);
          return $this->color;
     }
 
@@ -60,38 +62,10 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function base() {
+    public function base()
+    {
         return $this->color;
     }
-
-    /**
-     * Creates a new color object
-     *
-     * @param string|null $colorString Color String
-     *
-     * @return \Colorizr\models\Color
-     */
-    public function create($colorString) {
-        $colorString = is_string($colorString) ? $colorString : '';
-        $colorString = strtolower($colorString);
-        $colorString = preg_replace("/[^0-9a-f]/", '', $colorString);
-        $red   = 0;
-        $green = 0;
-        $blue  = 0;
-        if (strlen($colorString) == 6) {
-            $colorVal = hexdec($colorString);
-            // Bitwise calculation
-            $red   = 0xFF & ($colorVal >> 0x10);
-            $green = 0xFF & ($colorVal >> 0x8);
-            $blue  = 0xFF & $colorVal;
-        } elseif (strlen($colorString) == 3) { //if shorthand notation, need some string manipulations
-            $red   = hexdec(str_repeat(substr($colorString, 0, 1), 2));
-            $green = hexdec(str_repeat(substr($colorString, 1, 1), 2));
-            $blue  = hexdec(str_repeat(substr($colorString, 2, 1), 2));
-        }
-        return new Color($red, $green, $blue);
-    }
-
 
     /**
      * Darkens a color by a certain percentage
@@ -100,7 +74,8 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function darken($percent) {
+    public function darken($percent)
+    {
         $percent    = $this->sanitizePercentage($percent);
         $mulitplier = (100 - $percent) / 100.0;
         return $this->multiplyColor($mulitplier);
@@ -113,7 +88,8 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function lighten($percent) {
+    public function lighten($percent)
+    {
         $percent    = $this->sanitizePercentage($percent);
         $multiplier = (100 + $percent) / 100.0;
         return $this->multiplyColor($multiplier);
@@ -127,20 +103,21 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function greyscale($colorString = null) {
+    public function greyscale($colorString = null)
+    {
         if ($colorString == null) {
             $color = $this->color;
         } else {
-            $color = $this->create($colorString);
+            $color = new Color($colorString);
         }
         /* Weighted per visual impact */
-        $desat = (int) round(
+        $grey = (int) round(
             $color->red * 0.299
             + $color->green * 0.587
             + $color->blue * 0.114
         );
 
-        return new Color($desat, $desat, $desat);
+        return new Color($grey, $grey, $grey);
     }
 
     /**
@@ -150,12 +127,16 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function saturate($percent) {
+    public function saturate($percent)
+    {
         $percent = $this->sanitizePercentage($percent) / 100.0;
         $color2 = $this->greyscale();
-        $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
-        $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
-        $blue  = $percent * $this->color->blue + (1.0 - $percent) * $color2->blue;
+        $red   = $percent * $this->color->red + (1.0 - $percent)
+            * $color2->red;
+        $green = $percent * $this->color->green + (1.0 - $percent)
+            * $color2->green;
+        $blue  = $percent * $this->color->blue + (1.0 - $percent)
+            * $color2->blue;
         return new Color($red, $green, $blue);
     }
 
@@ -166,12 +147,16 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function desaturate($percent) {
+    public function desaturate($percent)
+    {
         $percent = $this->sanitizePercentage($percent) / 100.0 * -1;
         $color2 = $this->greyscale();
-        $red   = $percent * $this->color->red + (1.0 - $percent) * $color2->red;
-        $green = $percent * $this->color->green + (1.0 - $percent) * $color2->green;
-        $blue  = $percent * $this->color->blue + (1.0 - $percent) * $color2->blue;
+        $red   = $percent * $this->color->red + (1.0 - $percent)
+            * $color2->red;
+        $green = $percent * $this->color->green + (1.0 - $percent)
+            * $color2->green;
+        $blue  = $percent * $this->color->blue + (1.0 - $percent)
+            * $color2->blue;
         return new Color($red, $green, $blue);
     }
 
@@ -182,8 +167,9 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function multiply($colorString) {
-        $color2 = $this->create($colorString);
+    public function multiply($colorString)
+    {
+        $color2 = new Color($colorString);
         return $this->multiplyColors($this->color, $color2);
     }
 
@@ -194,8 +180,9 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function screen($colorString) {
-        $color2 = $this->create($colorString);
+    public function screen($colorString)
+    {
+        $color2 = new Color($colorString);
         $red    = $this->color->red;
         $green  = $this->color->green;
         $blue   = $this->color->blue;
@@ -218,9 +205,10 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function overlay($colorString) {
-        $modifier = $this->create($colorString);
-        $product = new \Colorizr\models\Color(0, 0, 0);
+    public function overlay($colorString)
+    {
+        $modifier = new Color($colorString);
+        $product  = new Color(0, 0, 0);
 
         foreach (array('red', 'green', 'blue') as $channel) {
             if ($this->color->$channel >= 128) {
@@ -244,7 +232,8 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function complementary() {
+    public function complementary()
+    {
         return $this->hueShift(180);
     }
 
@@ -255,8 +244,9 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function hueShift($degree) {
-        $color = $this->cloneColor($this->color);
+    public function hueShift($degree)
+    {
+        $color = clone $this->color;
         $hsl = $color->toHSL();
         $h = ($hsl->h + $degree);
         return $color->fromHSL($h, $hsl->s, $hsl->l);
@@ -269,7 +259,8 @@ class ColorMath {
      *
      * @return int
      */
-    private function sanitizePercentage($percent) {
+    private function sanitizePercentage($percent)
+    {
         // Sanitize the bad inputs
         if (!is_numeric($percent)) {
             $percent = 0;
@@ -284,7 +275,8 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    private function multiplyColor($multiplier) {
+    private function multiplyColor($multiplier)
+    {
         $modColor = $this->color;
         $red      = (int) round($modColor->red * $multiplier);
         $green    = (int) round($modColor->green * $multiplier);
@@ -304,7 +296,8 @@ class ColorMath {
      *
      * @return int
      */
-    private function screenChannel($base, $mod) {
+    private function screenChannel($base, $mod)
+    {
         return $base + $mod - ($base * $mod) / 255;
     }
 
@@ -316,7 +309,8 @@ class ColorMath {
      *
      * @return int
      */
-    private function multiplyChannel($base, $mod) {
+    private function multiplyChannel($base, $mod)
+    {
         return ($base * $mod) / 255;
     }
 
@@ -328,26 +322,12 @@ class ColorMath {
      *
      * @return \Colorizr\models\Color
      */
-    private function multiplyColors($base, $modifier) {
-        return new \Colorizr\models\Color(
+    private function multiplyColors($base, $modifier)
+    {
+        return new Color(
             $this->multiplyChannel($base->red, $modifier->red),
             $this->multiplyChannel($base->green, $modifier->green),
             $this->multiplyChannel($base->blue, $modifier->blue)
-        );
-    }
-
-    /**
-     * Clones a color
-     *
-     * @param \Colorizr\models\Color $color Color
-     *
-     * @return \Colorizr\models\Color
-     */
-    public function cloneColor($color) {
-        return new \Colorizr\models\Color(
-            $color->red,
-            $color->green,
-            $color->blue
         );
     }
 }

@@ -34,18 +34,28 @@ class Color {
     /**
      * Constructor
      *
-     * @param int $red   Red Value
-     * @param int $green Green Value
-     * @param int $blue  Blue Value
-     * @param int $alpha Alpha Value
+     * @param int|string $red   Red Value
+     * @param int|null   $green Green Value
+     * @param int|null   $blue  Blue Value
+     * @param int|null   $alpha Alpha Value (Not Used Yet)
      *
      * @return \Colorizr\models\Color
      */
-    public function __construct($red, $green, $blue, $alpha = null) {
-        $this->red   = (int) round($red);
-        $this->green = (int) round($green);
-        $this->blue  = (int) round($blue);
-        $this->alpha = $alpha;
+    public function __construct(
+        $red,
+        $green = null,
+        $blue = null,
+        $alpha = null
+    ) {
+        if (is_string($red)) {
+            $this->fromString($red);
+        } else {
+            $this->red   = (int) round($red);
+            $this->green = (int) round($green);
+            $this->blue  = (int) round($blue);
+            $this->alpha = $alpha;
+        }
+
     }
 
     /**
@@ -53,7 +63,8 @@ class Color {
      *
      * @return string
      */
-    public function toHex() {
+    public function toHex()
+    {
         return $this->twoCharHex($this->red)
             . $this->twoCharHex($this->green)
             . $this->twoCharHex($this->blue);
@@ -66,7 +77,8 @@ class Color {
      *
      * @return string
      */
-    private function twoCharHex($int) {
+    private function twoCharHex($int)
+    {
         $int = dechex((int) round($int));
         $int = strlen($int) == 1
             ? '0' . $int
@@ -79,7 +91,8 @@ class Color {
      *
      * @return string
      */
-    public function toRGB() {
+    public function toRGB()
+    {
         return 'rgb(' . (int) $this->red . ',' . (int) $this->green. ','
             . (int) $this->blue . ')';
     }
@@ -89,7 +102,8 @@ class Color {
      *
      * @return string
      */
-    public function toRGBA() {
+    public function toRGBA()
+    {
         return 'rgba(' . (int) $this->red . ',' . (int) $this->green. ','
             . (int) $this->blue . ',' . $this->alpha . ')';
     }
@@ -99,7 +113,8 @@ class Color {
      *
      * @return object
      */
-    public function toHSL() {
+    public function toHSL()
+    {
         $red = $this->red / 255.0;
         $green = $this->green / 255.0;
         $blue = $this->blue / 255.0;
@@ -149,6 +164,38 @@ class Color {
     }
 
     /**
+     * Instantiates RGB values from string
+     *
+     * @param string $colorString
+     *
+     * @return void
+     */
+    private function fromString($colorString)
+    {
+        $colorString = is_string($colorString) ? $colorString : '';
+        $colorString = strtolower($colorString);
+        $colorString = preg_replace("/[^0-9a-f]/", '', $colorString);
+        if (strlen($colorString) == 6) {
+            // 6 Character String
+            $colorVal = hexdec($colorString);
+            // Bitwise calculation
+            $this->red   = 0xFF & ($colorVal >> 0x10);
+            $this->green = 0xFF & ($colorVal >> 0x8);
+            $this->blue  = 0xFF & $colorVal;
+        } elseif (strlen($colorString) == 3) {
+            //if shorthand notation, need some string manipulations
+            $this->red   = hexdec(str_repeat(substr($colorString, 0, 1), 2));
+            $this->green = hexdec(str_repeat(substr($colorString, 1, 1), 2));
+            $this->blue  = hexdec(str_repeat(substr($colorString, 2, 1), 2));
+        } else {
+            // I don't understand this string so we go black!
+            $this->red   = 0;
+            $this->green = 0;
+            $this->blue  = 0;
+        }
+    }
+
+    /**
      * Set RGB values for an HSL entry
      *
      * @param float $h Hue
@@ -157,7 +204,8 @@ class Color {
      *
      * @return $this
      */
-    public function fromHSL($h, $s, $l) {
+    public function fromHSL($h, $s, $l)
+    {
         $h = ($h % 360) / 360.0;
         $s = $s / 100.0;
         $l = $l / 100.0;
@@ -190,7 +238,8 @@ class Color {
      *
      * @return mixed
      */
-    private function hueToRGB($factor1, $factor2, $hue) {
+    private function hueToRGB($factor1, $factor2, $hue)
+    {
         if ($hue < 0) {
             $hue += 1;
         }
