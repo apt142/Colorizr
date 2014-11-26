@@ -8,6 +8,9 @@ pake_task('test');
 pake_desc('PHP Lint the src folder');
 pake_task('lint');
 
+pake_desc('PHP Sniff the src folder');
+pake_task('sniff');
+
 pake_desc('Display the version');
 pake_task('version');
 
@@ -24,6 +27,11 @@ function run_test() {
 function run_lint() {
     echo "\n * Linting files\n";
     passthru("./build/lint -R ./src");
+}
+
+function run_sniff() {
+    echo "\n * Sniffing files\n";
+    passthru('./vendor/bin/phpcs --standard=./phpcs.xml src/');
 }
 
 /* End of pakefile */

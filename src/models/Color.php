@@ -123,16 +123,16 @@ class Color {
         $max = max($red, $green, $blue);
         $delta = $max - $min;
 
-        $l = ($max + $min) / 2;
+        $luminosity = ($max + $min) / 2;
 
         if ($delta == 0) {
-            $h = 0;
-            $s = 0;
+            $hue = 0;
+            $saturation = 0;
         } else {
-            if ($l < 0.5) {
-                $s = $delta / ($max + $min);
+            if ($luminosity < 0.5) {
+                $saturation = $delta / ($max + $min);
             } else {
-                $s = $delta / (2 - $max - $min);
+                $saturation = $delta / (2 - $max - $min);
             }
 
             $dRed = ((($max - $red) / 6) + ($delta / 2)) / $delta;
@@ -140,26 +140,26 @@ class Color {
             $dBlue = ((($max - $blue) / 6) + ($delta / 2)) / $delta;
 
             if ($red == $max) {
-                $h = $dBlue - $dGreen;
+                $hue = $dBlue - $dGreen;
             } elseif ($green == $max) {
-                $h = (1 / 3) + $dRed - $dBlue;
+                $hue = (1 / 3) + $dRed - $dBlue;
             } elseif ($blue == $max) {
-                $h = (2 / 3) + $dGreen - $dRed;
+                $hue = (2 / 3) + $dGreen - $dRed;
             }
 
-            if ($h < 0) {
-                $h += 1;
+            if ($hue < 0) {
+                $hue += 1;
             }
 
-            if ($h > 1) {
-                $h -= 1;
+            if ($hue > 1) {
+                $hue -= 1;
             }
         }
 
         return (object) array(
-            'h' => $h * 360,
-            's' => $s * 100,
-            'l' => $l * 100
+            'h' => $hue * 360,
+            's' => $saturation * 100,
+            'l' => $luminosity * 100
         );
     }
 
