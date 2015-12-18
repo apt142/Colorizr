@@ -14,6 +14,9 @@ pake_task('sniff');
 pake_desc('Display the version');
 pake_task('version');
 
+pake_desc('Run the application with local php server');
+pake_task('server');
+
 /** Run Functions */
 function run_version() {
     $composer = json_decode(file_get_contents('composer.json'));
@@ -32,6 +35,12 @@ function run_lint() {
 function run_sniff() {
     echo "\n * Sniffing files\n";
     passthru('./vendor/bin/phpcs --standard=./phpcs.xml src/');
+}
+
+function run_server() {
+    $host = 'localhost:8008';
+    pake_echo_comment('Now serving site from http://' . $host);
+    pake_sh('php -S ' . $host . ' -t public', true);
 }
 
 /* End of pakefile */

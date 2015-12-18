@@ -38,6 +38,16 @@ $app->get(
     }
 );
 
+$app->post(
+    '/',
+        function() use($app) {
+            // return $app->redirect('/help');
+            header("Location: http://localhost:8008/help");
+            die;
+            // $app->abort(302, "Ack!");
+        }
+);
+
 // Path
 $app->get(
     '/help',
