@@ -27,7 +27,9 @@
   "require": {
     "indeyets/pake": "~1.99",
     "silex/silex": "~1.1",
-    "j7mbo/twitter-api-php": "dev-master"
+    "j7mbo/twitter-api-php": "dev-master",
+    "twig/twig": "^1.23",
+    "symfony/twig-bridge": "^3.0"
   },
 
   "require-dev": {

@@ -1,0 +1,104 @@
+{% extends "templates/standard.html" %}
+
+{% block scripts %}
+<script src="/components/tinycolor/dist/tinycolor-min.js"></script>
+<script src="/assets/js/color-tester.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="../assets/css/color-tester.css">
+{% endblock %}
+
+{% block main_stage %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Color Tester</h1>
+            <p>
+                This is to take a sample color see how it plays out.
+            </p>
+        </div>
+
+        <div class="col-sm-12">
+
+
+            <h2>Sample Color</h2>
+            <div class="sample-container">
+
+                <div class="input-group input-group-lg">
+                            <span class="input-group-btn">
+                                <input type="color" id="sample" name="sample" value="#bada55">
+                            </span>
+                    <input type="text" id="sample-rgb" name="sample-rgb" value="#bada55" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" id="build-palette" type="button">Build!</button>
+                            </span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Swatches</h3>
+            <div class="swatch primary-swatch">
+                <header>Primary</header>
+                <div class="swatch-color">
+                    <span class="swatch-color-label"></span>
+                </div>
+            </div>
+
+            <div class="swatch success-swatch">
+                <header>Success</header>
+                <div class="swatch-color">
+                    <span class="swatch-color-label"></span>
+                </div>
+            </div>
+
+            <div class="swatch info-swatch">
+                <header>Info</header>
+                <div class="swatch-color">
+                    <span class="swatch-color-label"></span>
+                </div>
+            </div>
+
+            <div class="swatch warning-swatch">
+                <header>Warning</header>
+                <div class="swatch-color">
+                    <span class="swatch-color-label"></span>
+                </div>
+            </div>
+
+            <div class="swatch danger-swatch">
+                <header>Danger</header>
+                <div class="swatch-color">
+                    <span class="swatch-color-label"></span>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="col-sm-8">
+            <div>
+                <h3>Alerts</h3>
+                <div class="alert alert-success" role="alert">
+                    <strong>Success!</strong> - Rock on
+                </div>
+                <div class="alert alert-info" role="alert">
+                    <strong>Info!</strong> - You have food on your shirt
+                </div>
+                <div class="alert alert-warning" role="alert">
+                    <strong>Warning!</strong> - Incoming llamas
+                </div>
+                <div class="alert alert-danger" role="alert">
+                    <strong>Danger!</strong> - Will Robinson
+                </div>
+            </div>
+
+        </div>
+        -->
+    </div>
+</div>
+{% endblock %}

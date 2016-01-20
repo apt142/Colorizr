@@ -22,11 +22,15 @@ $isDebug = true;
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 // Setup the namespace for our own namespace
-$loader->add('Colorizr', __DIR__ . '../src');
+$loader->add('Colorizr', __DIR__ . '/../src');
 
 // Init Silex
 $app = new Silex\Application();
 $app['debug'] = true;
+
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__ . '/../src/views',
+));
 
 
 // Path
@@ -278,6 +282,37 @@ $app->get(
             return $app->json($controller->theme($colorString));
         }
 );
+
+
+$app->get(
+    '/theme-cue',
+        function() use($app) {
+            $controller = new Colorizr\controllers\Theme($app);
+            $vars = $controller->themeCues(null);
+
+            return $app['twig']->render(
+                'theme-cues.twig',
+                array(
+                    $vars
+                )
+            );
+        }
+);
+$app->get(
+    '/theme-cue/{colorString}',
+    function($colorString) use($app) {
+        $controller = new Colorizr\controllers\Theme($app);
+        $vars = $controller->themeCues($colorString);
+
+        return $app['twig']->render(
+            'theme-cues.twig',
+            array(
+                $vars
+            )
+        );
+    }
+);
+
 
 $app->error(function (\Exception $e, $code) use ($app, $isDebug) {
     switch ($code) {

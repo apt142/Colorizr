@@ -4,7 +4,6 @@
 pake_desc('Run the unit tests');
 pake_task('test');
 
-
 pake_desc('PHP Lint the src folder');
 pake_task('lint');
 
