@@ -268,6 +268,17 @@ $app->get(
     }
 );
 
+$app->get(
+    '/theme/{colorString}',
+        function($colorString) use($app) {
+            $controller = new Colorizr\controllers\Color(
+                $app,
+                new \Colorizr\lib\ColorMath()
+            );
+            return $app->json($controller->theme($colorString));
+        }
+);
+
 $app->error(function (\Exception $e, $code) use ($app, $isDebug) {
     switch ($code) {
         case 404:

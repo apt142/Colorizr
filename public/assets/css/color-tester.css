@@ -1,0 +1,27 @@
+.sample-container {
+  margin-bottom: 40px;
+}
+#sample {
+  height: 45px;
+  width: 45px;
+  margin: 0 10px;
+  vertical-align: top;
+}
+.swatch {
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  margin: 10px 0px 30px 10px;
+  width: 100%;
+  max-width: 150px;
+  display: inline-block;
+}
+.swatch header {
+  font-weight: bold;
+  padding: 5px;
+}
+.swatch .swatch-color {
+  height: 75px;
+  width: 100%;
+  background-color: transparent;
+  padding: 5px;
+}

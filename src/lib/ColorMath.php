@@ -13,7 +13,7 @@
 
 namespace Colorizr\lib;
 
-use \Colorizr\models\Color;
+use \Colorizr\models\Color as Color;
 
 /**
  * Class ColorMath
@@ -47,14 +47,19 @@ class ColorMath {
      /**
       * Creates a Color object out of a hex string
       *
-      * @param string $colorString Hex String for a color.  eg FF0000, #ff0000, f00
+      * @param mixed $colorString Hex String for a color.  eg FF0000, #ff0000, f00
       *
       * @return \Colorizr\models\Color
       */
     public function set($colorString)
     {
-         $this->color = new Color($colorString);
-         return $this->color;
+        if (is_a($colorString, '\Colorizr\models\Color')) {
+            $this->color = $colorString;
+        } else {
+            $this->color = new Color($colorString);
+        }
+
+        return $this->color;
     }
 
     /**

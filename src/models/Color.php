@@ -198,33 +198,33 @@ class Color {
     /**
      * Set RGB values for an HSL entry
      *
-     * @param float $h Hue
-     * @param float $s Saturation
-     * @param float $l Luminosity
+     * @param float $hue        Hue
+     * @param float $saturation Saturation
+     * @param float $luminosity Luminosity
      *
      * @return $this
      */
-    public function fromHSL($h, $s, $l)
+    public function fromHSL($hue, $saturation, $luminosity)
     {
-        $h = ($h % 360) / 360.0;
-        $s = $s / 100.0;
-        $l = $l / 100.0;
+        $hue = ($hue % 360) / 360.0;
+        $saturation = $saturation / 100.0;
+        $luminosity = $luminosity / 100.0;
 
-        if ($s == 0) {
-            $this->red   = $l * 255;
-            $this->green = $l * 255;
-            $this->blue  = $l * 255;
+        if ($saturation == 0) {
+            $this->red   = $luminosity * 255;
+            $this->green = $luminosity * 255;
+            $this->blue  = $luminosity * 255;
         } else {
-            if ($l < 0.5) {
-                $factor2 = $l * (1 + $s);
+            if ($luminosity < 0.5) {
+                $factor2 = $luminosity * (1 + $saturation);
             } else {
-                $factor2 = ($l + $s) - ($s * $l);
+                $factor2 = ($luminosity + $saturation) - ($saturation * $luminosity);
             }
 
-            $factor1 = 2 * $l - $factor2;
-            $this->red   = 255 * $this->hueToRGB($factor1, $factor2, $h + (1 / 3));
-            $this->green = 255 * $this->hueToRGB($factor1, $factor2, $h);
-            $this->blue  = 255 * $this->hueToRGB($factor1, $factor2, $h - (1 / 3));
+            $factor1 = 2 * $luminosity - $factor2;
+            $this->red   = 255 * $this->hueToRGB($factor1, $factor2, $hue + (1 / 3));
+            $this->green = 255 * $this->hueToRGB($factor1, $factor2, $hue);
+            $this->blue  = 255 * $this->hueToRGB($factor1, $factor2, $hue - (1 / 3));
         };
         return $this;
     }

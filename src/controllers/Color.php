@@ -12,6 +12,8 @@
 
 namespace Colorizr\controllers;
 
+use \Colorizr\lib\ColorMath as ColorMath;
+
 /**
  * Class Color
  *
@@ -368,6 +370,75 @@ class Color {
             );
         }
         return $result;
+    }
+
+    /**
+     * Returns colors that should fit well into a theme template
+     *
+     * @param $colorString
+     *
+     * @return array
+     */
+    public function theme($colorString) {
+        $result = null;
+
+        if ($this->validateColorString($colorString)) {
+            $this->colorMath->set($colorString);
+
+            $grey = $this->colorMath->greyscale();
+
+            // $intensity = $grey->blue / 255.0;
+            $success = $this->themeCue($colorString, '#5cb85c');
+            $info    = $this->themeCue($colorString, '#5bc0de');
+            $warning = $this->themeCue($colorString, '#f0ad4e');
+            $danger  = $this->themeCue($colorString, '#d9534f');
+
+            $result = array(
+                'success' => $success->toHex(),
+                'info'    => $info->toHex(),
+                'warning' => $warning->toHex(),
+                'danger'  => $danger->toHex()
+            );
+
+        }
+
+        return $result;
+    }
+
+    private function themeCue($primaryColorString, $roleColorString) {
+        $primary = new \Colorizr\models\Color($primaryColorString);
+        $role = new \Colorizr\models\Color($roleColorString);
+        $result = new \Colorizr\models\Color('#fff');
+
+        $primaryHSL = $primary->toHSL();
+        $roleHSL = $role->toHSL();
+
+        $colorMath = new ColorMath();
+
+        // var_dump($primaryHSL);
+        // die;
+
+        $colorMath->set(
+            $result->fromHSL(
+                $roleHSL->h,
+                (0.75 * $primaryHSL->s + 12.5), // (50 * 0.25 + $primaryHSL->s * 0.75),
+                (0.6 * $primaryHSL->l + 20) // (50 * 0.40 + $primaryHSL->l * 0.60)
+            )
+        );
+
+        return $colorMath->overlay('#888');
+
+        /*
+
+        $color = new ColorMath($primaryColorString);
+        $colorResult = $color->screen($roleColorString);
+        $color->set($colorResult);
+        $colorResult = $color->screen($roleColorString);
+
+        // $color = new ColorMath($roleColorString);
+
+        return $colorResult;
+        */
     }
 
     /**
