@@ -34,10 +34,10 @@ class Color {
     /**
      * Constructor
      *
-     * @param int|string $red   Red Value
-     * @param int|null   $green Green Value
-     * @param int|null   $blue  Blue Value
-     * @param int|null   $alpha Alpha Value (Not Used Yet)
+     * @param int|string|Color $red   Red Value
+     * @param int|null         $green Green Value
+     * @param int|null         $blue  Blue Value
+     * @param int|null         $alpha Alpha Value (Not Used Yet)
      *
      * @return \Colorizr\models\Color
      */
@@ -49,6 +49,11 @@ class Color {
     ) {
         if (is_string($red)) {
             $this->fromString($red);
+        } elseif (is_a($red, 'Colorizr\models\Color')) {
+            $this->red   = (int) round($red->red);
+            $this->green = (int) round($red->green);
+            $this->blue  = (int) round($red->blue);
+            $this->alpha = $red->alpha;
         } else {
             $this->red   = (int) round($red);
             $this->green = (int) round($green);
@@ -65,7 +70,7 @@ class Color {
      */
     public function toHex()
     {
-        return $this->twoCharHex($this->red)
+        return '#' . $this->twoCharHex($this->red)
             . $this->twoCharHex($this->green)
             . $this->twoCharHex($this->blue);
     }
@@ -169,6 +174,8 @@ class Color {
      * @param string $colorString
      *
      * @return void
+     *
+     * @TODO: Accept rgb(), rgba() and hsl() formats
      */
     private function fromString($colorString)
     {

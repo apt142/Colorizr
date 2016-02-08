@@ -18,18 +18,14 @@
                 This is to take a sample color see how it plays out.
             </p>
         </div>
-
         <div class="col-sm-12">
-
-
             <h2>Sample Color</h2>
             <div class="sample-container">
-
                 <div class="input-group input-group-lg">
                             <span class="input-group-btn">
-                                <input type="color" id="sample" name="sample" value="#bada55">
+                                <input type="color" id="sample" name="sample" value="{{ color }}">
                             </span>
-                    <input type="text" id="sample-rgb" name="sample-rgb" value="#bada55" class="form-control">
+                    <input type="text" id="sample-rgb" name="sample-rgb" value="{{ color }}" class="form-control">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" id="build-palette" type="button">Build!</button>
                             </span>
@@ -38,6 +34,13 @@
 
             </div>
         </div>
+        <div class="col-sm-12">
+            <form action="/build/bootstrap" method="post">
+                <input type="hidden" name="primary" id="primaryInput" value="{{ color }}">
+                <button class="btn btn-primary" type="submit">Build Bootstrap</button>
+            </form>
+        </div>
+
     </div>
 
 
@@ -51,15 +54,14 @@
                 </div>
             </div>
 
-            <div class="swatch success-swatch">
-                <header>Success</header>
+            <div class="swatch info-swatch">
+                <header>Info</header>
                 <div class="swatch-color">
                     <span class="swatch-color-label"></span>
                 </div>
             </div>
-
-            <div class="swatch info-swatch">
-                <header>Info</header>
+            <div class="swatch success-swatch">
+                <header>Success</header>
                 <div class="swatch-color">
                     <span class="swatch-color-label"></span>
                 </div>

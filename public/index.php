@@ -9,6 +9,7 @@
  * @author   Cris Bettis <apt142@apartment142.com>
  * @license  CC BY-NC-SA http://creativecommons.org/licenses/by-nc-sa/3.0/
  */
+const WEB_ROOT = __DIR__;
 
 // Are we ready?
 if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
@@ -17,6 +18,8 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 
 /** @var $mode boolean Debug Mode? */
 $isDebug = true;
+
+date_default_timezone_set('America/New_York');
 
 // Bootstrap our application with the Composer autoloader
 $loader = require __DIR__ . '/../vendor/autoload.php';
@@ -287,31 +290,31 @@ $app->get(
 $app->get(
     '/theme-cue',
         function() use($app) {
-            $controller = new Colorizr\controllers\Theme($app);
-            $vars = $controller->themeCues(null);
+            $controller = new Colorizr\controllers\Theme();
+            $vars = $controller->themeCues();
 
             return $app['twig']->render(
                 'theme-cues.twig',
-                array(
-                    $vars
-                )
+                $vars
             );
         }
 );
+
 $app->get(
     '/theme-cue/{colorString}',
     function($colorString) use($app) {
-        $controller = new Colorizr\controllers\Theme($app);
+        $controller = new Colorizr\controllers\Theme();
         $vars = $controller->themeCues($colorString);
 
         return $app['twig']->render(
             'theme-cues.twig',
-            array(
-                $vars
-            )
+            $vars
         );
     }
 );
+
+$app->post('/build/bootstrap', 'Colorizr\controllers\\Theme::buildBootstrap');
+
 
 
 $app->error(function (\Exception $e, $code) use ($app, $isDebug) {

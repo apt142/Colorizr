@@ -12,6 +12,11 @@
 
 namespace Colorizr\controllers;
 
+use Colorizr\lib\BootstrapBuilder;
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request as Request;
+
+
 /**
  * Class Theme
  *
@@ -28,18 +33,6 @@ class Theme {
     private $app;
 
     /**
-     * Constructor
-     *
-     * @param \Silex\Application &$app Silex Application
-     *
-     * @return \Colorizr\controllers\Theme
-     */
-    public function __construct(&$app)
-    {
-        $this->app = $app;
-    }
-
-    /**
      * Action to deliver complementary Theme
      *
      * @param string $colorString Optional Color String
@@ -48,10 +41,31 @@ class Theme {
      */
     public function themeCues($colorString = null)
     {
+        $colorString = empty($colorString) ? 'bada55' : $colorString;
+        $colorString = '#' . rtrim($colorString, '#');
         $result = array(
             'color' => $colorString
         );
 
         return $result;
+    }
+
+    /**
+     * Build a bootstrap css based on the request variables
+     *
+     * @param Request     $request
+     * @param Application $app
+     *
+     * @return mixed
+     */
+    public function buildBootstrap(Request $request, Application $app) {
+        // Build bootstrap from the request variables
+        $bootstrap = new BootstrapBuilder($app);
+
+        return $app->json(
+            array(
+                'file_path' => $bootstrap->build($request)
+            )
+        );
     }
 }

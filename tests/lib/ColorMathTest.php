@@ -138,7 +138,7 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->multiply('#999999');
-        $this->assertSame('993d00', $color->toHex());
+        $this->assertSame('#993d00', $color->toHex());
     }
 
     /**
@@ -148,7 +148,7 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->screen('#999999');
-        $this->assertSame('ffc299', $color->toHex());
+        $this->assertSame('#ffc299', $color->toHex());
     }
 
     /**
@@ -158,16 +158,16 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->overlay('#999999');
-        $this->assertSame('ff7a00', $color->toHex());
+        $this->assertSame('#ff7a00', $color->toHex());
 
         $color = $colorMath->overlay('#0000ff');
-        $this->assertSame('ff0000', $color->toHex());
+        $this->assertSame('#ff0000', $color->toHex());
 
         $color = $colorMath->overlay('#333333');
-        $this->assertSame('ff2900', $color->toHex());
+        $this->assertSame('#ff2900', $color->toHex());
 
         $color = $colorMath->overlay('#00ff00');
-        $this->assertSame('ffcc00', $color->toHex());
+        $this->assertSame('#ffcc00', $color->toHex());
     }
 
     /**
@@ -177,7 +177,7 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->complementary();
-        $this->assertSame('0099ff', $color->toHex());
+        $this->assertSame('#0099ff', $color->toHex());
     }
 
 }

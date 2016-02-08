@@ -8,6 +8,7 @@ $(document).ready(function () {
   body.on('change', '#sample', function () {
     var color = tinycolor($(this).val());
     $('#sample-rgb').val(color.toHexString());
+    $('#primaryInput').val(color.toHexString());
   });
 
 
@@ -17,6 +18,7 @@ $(document).ready(function () {
     if (color.isValid()) {
       $(this).val(color.toHexString());
       $('#sample').val(color.toHexString());
+      $('#primaryInput').val(color.toHexString());
     }
   });
 
@@ -33,16 +35,17 @@ $(document).ready(function () {
 
     $.get('/theme/' + color, {}, function (data) {
       colorSwatch('.primary-swatch', '#' + color);
-      colorSwatch('.success-swatch', '#' + data.success);
-      colorSwatch('.info-swatch', '#' + data.info);
-      colorSwatch('.warning-swatch', '#' + data.warning);
-      colorSwatch('.danger-swatch', '#' + data.danger);
+      colorSwatch('.success-swatch', data.success);
+      colorSwatch('.info-swatch', data.info);
+      colorSwatch('.warning-swatch', data.warning);
+      colorSwatch('.danger-swatch', data.danger);
 
     });
 
     function colorSwatch(className, color) {
       var textColor = '#ccc';
-      $(className + ' .swatch-color').css({background: color});
+      console.log(className + ' .swatch-color');
+      $(className + ' .swatch-color').css('background', color);
       $(className + ' .swatch-color-label').html(color);
       if (tinycolor(color).isDark()) {
         textColor = '#ddd';
