@@ -10,97 +10,146 @@
 {% endblock %}
 
 {% block main_stage %}
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <h1>Color Tester</h1>
-            <p>
-                This is to take a sample color see how it plays out.
-            </p>
-        </div>
-        <div class="col-sm-12">
-            <h2>Sample Color</h2>
-            <div class="sample-container">
-                <div class="input-group input-group-lg">
-                            <span class="input-group-btn">
-                                <input type="color" id="sample" name="sample" value="{{ color }}">
-                            </span>
-                    <input type="text" id="sample-rgb" name="sample-rgb" value="{{ color }}" class="form-control">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" id="build-palette" type="button">Build!</button>
-                            </span>
-                </div>
-
-
+<div class="configuration-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Color Tester</h1>
+                <p>
+                    This is to take a sample color see how it plays out.
+                </p>
             </div>
         </div>
-        <div class="col-sm-12">
-            <form action="/build/bootstrap" method="post">
-                <input type="hidden" name="primary" id="primaryInput" value="{{ color }}">
-                <button class="btn btn-primary" type="submit">Build Bootstrap</button>
-            </form>
-        </div>
 
-    </div>
+        <form action="/build/bootstrap" method="post" id="form-build" enctype="application/x-www-form-urlencoded">
+            <div class="row option-section">
+                <div class="col-xs-12">
+                    <h2>Colors</h2>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="primary-swatch">
+                        <div class="input">
+                            <input type="text" id="sample-rgb" name="sample-rgb" value="{{ color }}" class="form-control">
+                        </div>
+                        <div class="color">
+                            <input type="color" id="primary" name="primary" value="{{ color }}">
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-sm-6 col-xs-12">
+                    <div class="swatch info-swatch">
+                        <header>Info</header>
+                        <div class="swatch-color">
+                            <span class="swatch-color-label"></span>
+                        </div>
+                        <input type="hidden" name="info" id="info" value="">
+                    </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h3>Swatches</h3>
-            <div class="swatch primary-swatch">
-                <header>Primary</header>
-                <div class="swatch-color">
-                    <span class="swatch-color-label"></span>
+                    <div class="swatch success-swatch">
+                        <header>Success</header>
+                        <div class="swatch-color">
+                            <span class="swatch-color-label"></span>
+                        </div>
+                        <input type="hidden" name="success" id="success" value="">
+                    </div>
+
+                    <div class="swatch warning-swatch">
+                        <header>Warning</header>
+                        <div class="swatch-color">
+                            <span class="swatch-color-label"></span>
+                        </div>
+                        <input type="hidden" name="warning" id="warning" value="">
+                    </div>
+
+                    <div class="swatch danger-swatch">
+                        <header>Danger</header>
+                        <div class="swatch-color">
+                            <span class="swatch-color-label"></span>
+                        </div>
+                        <input type="hidden" name="danger" id="danger" value="">
+                    </div>
                 </div>
             </div>
+            <div class="row option-section">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Border Radius</label>
+                        <select name="border-radius" id="border-radius" class="form-control ">
+                            <option value="0px">None</option>
+                            <option value="2px">Small</option>
+                            <option value="4px" selected>Normal</option>
+                            <option value="8px">Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row option-section">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Header Font:</label>
+                        <select name="heading-family" id="heading-family" class="form-control ">
+                            <optgroup label="Sans-Serif">
+                                {% for key, font in fonts if font.type == 'sans-serif' %}
+                                    <option value="{{ key }}">{{ font.name }}</option>
+                                {%  endfor %}
+                            </optgroup>
+                            <optgroup label="Serif">
+                                {% for key, font in fonts if font.type == 'serif' %}
+                                    <option value="{{ key }}">{{ font.name }}</option>
+                                {%  endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
 
-            <div class="swatch info-swatch">
-                <header>Info</header>
-                <div class="swatch-color">
-                    <span class="swatch-color-label"></span>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Default Font:</label>
+                        <select name="font-family" id="font-family" class="form-control ">
+                            <optgroup label="Sans-Serif">
+                                {% for key, font in fonts if font.type == 'sans-serif' %}
+                                    <option value="{{ key }}">{{ font.name }}</option>
+                                {%  endfor %}
+                            </optgroup>
+                            <optgroup label="Serif">
+                                {% for key, font in fonts if font.type == 'serif' %}
+                                    <option value="{{ key }}">{{ font.name }}</option>
+                                {%  endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="swatch success-swatch">
-                <header>Success</header>
-                <div class="swatch-color">
-                    <span class="swatch-color-label"></span>
-                </div>
-            </div>
 
-            <div class="swatch warning-swatch">
-                <header>Warning</header>
-                <div class="swatch-color">
-                    <span class="swatch-color-label"></span>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label>Font Size</label>
+                        <select name="font-size" id="font-size" class="form-control ">
+                            <option value="8px">8px</option>
+                            <option value="9px">9px</option>
+                            <option value="10px">10px</option>
+                            <option value="11px">11px</option>
+                            <option value="12px">12px</option>
+                            <option value="14px" selected>14px</option>
+                            <option value="16px">16px</option>
+                            <option value="18px">18px</option>
+                            <option value="20px">20px</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div class="swatch danger-swatch">
-                <header>Danger</header>
-                <div class="swatch-color">
-                    <span class="swatch-color-label"></span>
-                </div>
-            </div>
-        </div>
-        <!--
-        <div class="col-sm-8">
-            <div>
-                <h3>Alerts</h3>
-                <div class="alert alert-success" role="alert">
-                    <strong>Success!</strong> - Rock on
-                </div>
-                <div class="alert alert-info" role="alert">
-                    <strong>Info!</strong> - You have food on your shirt
-                </div>
-                <div class="alert alert-warning" role="alert">
-                    <strong>Warning!</strong> - Incoming llamas
-                </div>
-                <div class="alert alert-danger" role="alert">
-                    <strong>Danger!</strong> - Will Robinson
-                </div>
-            </div>
+                <div class="col-sm-6 col-xs-12">
+                    {# Grey Scale here #}
+                    <input type="hidden" name="text-color" id="text_color" value="#333333">
+                    <input type="hidden" name="body-color" id="body_color" value="#ffffff">
 
-        </div>
-        -->
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg" type="submit" id="build-action">Build Bootstrap</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

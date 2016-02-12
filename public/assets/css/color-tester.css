@@ -1,27 +1,50 @@
-.sample-container {
+.configuration-section .sample-container {
   margin-bottom: 40px;
 }
-#sample {
-  height: 45px;
-  width: 45px;
-  margin: 0 10px;
+.configuration-section .primary-swatch #primary {
+  height: 400px;
+  width: 100%;
+  margin: 10px 0;
   vertical-align: top;
 }
-.swatch {
+.configuration-section .swatch {
   border: solid 1px #ccc;
   border-radius: 4px;
-  margin: 10px 0px 30px 10px;
+  margin: 0px 5px 10px;
   width: 100%;
-  max-width: 150px;
   display: inline-block;
 }
-.swatch header {
+.configuration-section .swatch header {
   font-weight: bold;
   padding: 5px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
 }
-.swatch .swatch-color {
+.configuration-section .swatch .swatch-color {
   height: 75px;
   width: 100%;
   background-color: transparent;
   padding: 5px;
+}
+.configuration-section .swatch .swatch-color-label {
+  font-size: 1.4em;
+  padding: 12px;
+  display: block;
+}
+.styleguide {
+  margin: 40px 0;
+}
+.styleguide .display .anchor {
+  color: inherit;
+  text-transform: uppercase;
+}
+.styleguide .markup.section {
+  margin: 10px 0 40px;
+}
+.styleguide .markup.section .markup-controls {
+  margin: 10px 0 20px;
+  display: none;
+}
+.styleguide .markup.section .source {
+  display: none;
 }

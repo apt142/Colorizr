@@ -27,6 +27,8 @@ $loader = require __DIR__ . '/../vendor/autoload.php';
 // Setup the namespace for our own namespace
 $loader->add('Colorizr', __DIR__ . '/../src');
 
+use Symfony\Component\HttpFoundation\Request;
+
 // Init Silex
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -313,7 +315,24 @@ $app->get(
     }
 );
 
-$app->post('/build/bootstrap', 'Colorizr\controllers\\Theme::buildBootstrap');
+$app->post(
+    '/build/bootstrap',
+     function (Request $request) use ($app) {
+         /*
+         die(json_encode(
+             array(
+                 'obj' => Request::createFromGlobals(),
+                 'get' => $_GET,
+                 'post' => $_POST,
+                 'request' => $_REQUEST,
+                 'primary' => $request->request->get('primary')
+             )
+         ));
+         */
+         $controller = new Colorizr\controllers\Theme();
+         return $controller->buildBootstrap($request, $app);
+     }
+);
 
 
 

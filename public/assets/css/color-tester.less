@@ -1,37 +1,73 @@
+.configuration-section {
 
-
-.sample-container {
-  margin-bottom: 40px;
-}
-
-#sample {
-  height: 45px;
-  width: 45px;
-  margin: 0 10px;
-  vertical-align: top;
-}
-
-#sample-rgb {
-
-}
-
-.swatch {
-  border: solid 1px #ccc;
-  border-radius: 4px;
-  margin: 10px 0px 30px 10px;
-  width: 100%;
-  max-width: 150px;
-  display: inline-block;
-
-  header {
-    font-weight: bold;
-    padding: 5px;
+  .sample-container {
+    margin-bottom: 40px;
   }
-  .swatch-color {
-    height: 75px;
+
+  .primary-swatch {
+
+    #primary {
+      height: 400px;
+      width: 100%;
+      margin: 10px 0;
+      vertical-align: top;
+    }
+
+    #sample-rgb {}
+  }
+
+  .swatch {
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin: 0px 5px 10px;
     width: 100%;
-    background-color: transparent;
-    padding: 5px;
+    display: inline-block;
+
+    header {
+      font-weight: bold;
+      padding: 5px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+    .swatch-color {
+      height: 75px;
+      width: 100%;
+      background-color: transparent;
+      padding: 5px;
+    }
+    .swatch-color-label {
+      font-size: 1.4em;
+      padding: 12px;
+      display: block;
+    }
+  }
+}
+
+
+.styleguide {
+  margin: 40px 0;
+
+  .display {
+
+    .anchor {
+      color: inherit;
+      text-transform: uppercase;
+    }
+  }
+
+  .markup.section {
+    margin: 10px 0 40px;
+
+
+
+    .markup-controls {
+      margin: 10px 0 20px;
+      display: none;
+    }
+
+    .source {
+      display: none;
+    }
   }
 }
 

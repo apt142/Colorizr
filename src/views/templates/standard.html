@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Place favicon.ico in the root directory -->
-    <link rel="stylesheet" href="../components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" id="bootstrap-link" href="../components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../components/spectrum/spectrum.css">
     {% block css %}{% endblock %}
 
@@ -17,6 +17,10 @@
 <body>
 
 {% block main_stage %}{% endblock %}
+
+    <div class="styleguide">
+        {% include 'styleguide-bootstrap.html' %}
+    </div>
 
 <!-- Footer Script -->
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

@@ -6,8 +6,8 @@ $brand-success:          {{ palette.success.toHex()|raw }};
 $brand-warning:          {{ palette.warning.toHex()|raw }};
 $brand-danger:           {{ palette.danger.toHex()|raw }};
 
-$font-family-sans-serif: {{ font.family|raw }};
-$headings-font-family:   {{ font.heading_family|raw }};
+$font-family-sans-serif: {{ font.family.family|raw }};
+$headings-font-family:   {{ font.heading_family.family|raw }};
 
 $font-size-base:         {{ font.base_size|raw }};
 
@@ -18,5 +18,13 @@ $link-color:             {{ palette.primary.toHex()|raw }};
 $border-radius-base:     {{ presentation.border_radius|raw }};
 $border-radius-large:    floor(($border-radius-base * 1.5));
 $border-radius-small:    ceil(($border-radius-base * 0.75));
+
+{% if font.family.url %}
+@import url({{ font.family.url }});
+{% endif %}
+
+{% if font.heading_family.url %}
+@import url({{ font.heading_family.url }});
+{% endif %}
 
 @import "_bootstrap.scss";

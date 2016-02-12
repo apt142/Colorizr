@@ -13,6 +13,7 @@
 namespace Colorizr\controllers;
 
 use Colorizr\lib\BootstrapBuilder;
+use Colorizr\lib\ConfigLoader;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request as Request;
 
@@ -43,8 +44,12 @@ class Theme {
     {
         $colorString = empty($colorString) ? 'bada55' : $colorString;
         $colorString = '#' . rtrim($colorString, '#');
+
+        $fonts = ConfigLoader::loadConfig('fonts');
+
         $result = array(
-            'color' => $colorString
+            'color' => $colorString,
+            'fonts' => $fonts
         );
 
         return $result;

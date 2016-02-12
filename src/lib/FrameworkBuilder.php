@@ -83,7 +83,7 @@ class FrameworkBuilder {
     protected function buildPalette(Request $request) {
         $defaults = ThemeMath::getDefaults();
 
-        $primary = $request->query->get('primary', $defaults['primary']);
+        $primary = $request->request->get('primary', $defaults['primary']);
 
         $themeMath = new ThemeMath();
 
@@ -91,7 +91,7 @@ class FrameworkBuilder {
 
         // If we were passed other roles, let's overwrite our defaults
         foreach ($palette as $role => $colorSwatch) {
-            $color = $request->query->get($role, $colorSwatch);
+            $color = $request->request->get($role, $colorSwatch);
             if ($color !== null) {
                 $palette[$role] = new Color($color);
             }
@@ -114,30 +114,39 @@ class FrameworkBuilder {
     /**
      * Build the basic font/readability options
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request Request object
+     *
      * @return array
      */
-    protected function buildFontOptions() {
+    protected function buildFontOptions(Request $request) {
         $greys = $this->buildGreyScale();
 
+        $bodyColor = $request->request->get('body-color', '#fff');
+        $textColor = $request->request->get('text-color', '#333');
+
+        $fonts = $fonts = ConfigLoader::loadConfig('fonts');
+        $fontFamilyIndex = $request->request->get('font-family', 0);
+        $headerFamilyIndex = $request->request->get('heading-family', 0);
+
         return array(
-            'family'         => $this->defaultFont,
-            'base_size'      => '14px',
-            'heading_family' => $this->defaultFont,
-            'body_color'     => new Color('#fff'),
-            'text_color'     => !empty($greys['dark'])
-                ? $greys['dark']
-                : new Color('#333')
+            'family'         => $fonts[$fontFamilyIndex],
+            'base_size'      => $request->request->get('font-size', '14px'),
+            'heading_family' => $fonts[$headerFamilyIndex],
+            'body_color'     => new Color($bodyColor),
+            'text_color'     => new Color($textColor)
         );
     }
 
     /**
      * Build the basic presentation options
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request Request object
+     *
      * @return array
      */
-    protected function buildPresentationOptions() {
+    protected function buildPresentationOptions(Request $request) {
         return array(
-            'border_radius' => '4px'
+            'border_radius' => $request->request->get('border-radius', '4px')
         );
     }
 
@@ -151,8 +160,8 @@ class FrameworkBuilder {
     protected function getOptions(Request $request) {
         $this->palette      = $this->buildPalette($request);
         $this->greyScale    = $this->buildGreyScale();
-        $this->font         = $this->buildFontOptions();
-        $this->presentation = $this->buildPresentationOptions();
+        $this->font         = $this->buildFontOptions($request);
+        $this->presentation = $this->buildPresentationOptions($request);
 
         $this->options = array(
             'palette'      => $this->palette,
@@ -245,6 +254,7 @@ class FrameworkBuilder {
             WEB_ROOT . '/' . $path . '/' . $this->fileName,
             $contents
         );
+        chmod(WEB_ROOT . '/' . $path . '/' . $this->fileName, 0755);
     }
 
     /**
@@ -255,7 +265,7 @@ class FrameworkBuilder {
     protected function createPath() {
         $path = $this->getFilePath();
         if (!is_dir(WEB_ROOT . '/' . $path)) {
-            mkdir(WEB_ROOT . '/' . $path, 0755, true);
+            mkdir(WEB_ROOT . '/' . $path, 0777, true);
         }
 
         return $path;
