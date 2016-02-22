@@ -39,16 +39,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 
 // Path
-$app->get(
-    '/',
-    function() use($app) {
-        $controller = new Colorizr\controllers\Help($app);
-        return $app->json($controller->help());
-    }
-);
-
 $app->post(
-    '/',
+    '/help',
         function() use($app) {
             // return $app->redirect('/help');
             header("Location: http://localhost:8008/help");
@@ -290,6 +282,18 @@ $app->get(
 
 
 $app->get(
+    '/',
+    function() use($app) {
+        $controller = new Colorizr\controllers\Theme();
+        $vars = $controller->themeCues();
+        return $app['twig']->render(
+                           'theme-cues.twig',
+                               $vars
+        );
+    }
+);
+
+$app->get(
     '/theme-cue',
         function() use($app) {
             $controller = new Colorizr\controllers\Theme();
@@ -318,17 +322,6 @@ $app->get(
 $app->post(
     '/build/bootstrap',
      function (Request $request) use ($app) {
-         /*
-         die(json_encode(
-             array(
-                 'obj' => Request::createFromGlobals(),
-                 'get' => $_GET,
-                 'post' => $_POST,
-                 'request' => $_REQUEST,
-                 'primary' => $request->request->get('primary')
-             )
-         ));
-         */
          $controller = new Colorizr\controllers\Theme();
          return $controller->buildBootstrap($request, $app);
      }

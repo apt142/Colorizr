@@ -17,7 +17,7 @@ use Colorizr\models\Color;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request as Request;
 use Colorizr\lib\ThemeMath;
-use Leafo\ScssPhp\Compiler;
+use Colorizr\lib\Compiler;
 
 /**
  * Class FrameworkBuilder

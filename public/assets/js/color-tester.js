@@ -4,13 +4,17 @@ $(document).ready(function () {
   'use strict';
 
   var buildTimer = null;
-  var rebuildDelay = 100;
+  var rebuildDelay = 200;
+
+  var styleTimer = null;
+  var rebuildStyleDelay = 500;
 
   var body = $('body');
 
   body.on('change', '#primary', function () {
     var color = tinycolor($(this).val());
     $('#sample-rgb').val(color.toHexString());
+
     clearTimeout(buildTimer);
     buildTimer = setTimeout(buildPalette, rebuildDelay);
   });
@@ -38,6 +42,10 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
+  body.on('change', 'input,select', function () {
+    updateStyleSheet();
+  });
+
   buildPalette();
 
   function buildPalette() {
@@ -46,6 +54,16 @@ $(document).ready(function () {
     if (color.isValid()) {
       fetchRelatedColors(color.toHexString());
     }
+  }
+
+  function updateStyleSheet() {
+    clearTimeout(styleTimer);
+    styleTimer = setTimeout(
+      function () {
+        styleSheet.getStyleSheet();
+      },
+      rebuildStyleDelay
+    );
   }
 
   function fetchRelatedColors(color) {

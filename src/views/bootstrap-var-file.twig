@@ -27,4 +27,20 @@ $border-radius-small:    ceil(($border-radius-base * 0.75));
 @import url({{ font.heading_family.url }});
 {% endif %}
 
+$state-success-text:             hsl(hue($brand-success), lightness($brand-success), 30%);
+$state-success-bg:               hsl(hue($brand-success), lightness($brand-success), 92%);
+$state-success-border:           darken(adjust-hue($state-success-bg, -10), 5%);
+
+$state-info-text:                hsl(hue($brand-info), lightness($brand-info), 30%);
+$state-info-bg:                  hsl(hue($brand-info), lightness($brand-info), 92%);
+$state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%);
+
+$state-warning-text:             hsl(hue($brand-warning), lightness($brand-warning), 30%);
+$state-warning-bg:               hsl(hue($brand-warning), lightness($brand-warning), 92%);
+$state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%);
+
+$state-danger-text:              hsl(hue($brand-danger), lightness($brand-danger), 30%);
+$state-danger-bg:                hsl(hue($brand-danger), lightness($brand-danger), 92%);
+$state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%);
+
 @import "_bootstrap.scss";
