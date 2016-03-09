@@ -1,0 +1,23 @@
+build_settings:
+    ignore:
+        - "vendor"
+        - "tests"
+
+setup:
+    composer:
+        action: "install"
+
+test:
+    PhpUnit:
+        config:
+            - "phpunit.xml"
+        directory:
+            - "tests/"
+        run_from: "phpunit/"
+        coverage: "build/logs/coverage"
+    PhpMessDetector:
+        allow_failures: true
+    PhpCodeSniffer:
+        standard: "PSR2"
+    PhpCpd:
+        allow_failures: true

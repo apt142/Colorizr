@@ -47,6 +47,7 @@ $(document).ready(function () {
   });
 
   buildPalette();
+  styleSheet.getStyleSheet();
 
   function buildPalette() {
     var color = tinycolor($('#sample-rgb').val());
@@ -126,7 +127,10 @@ var styleSheet = {
   },
 
   updateStylesheet: function(data) {
+    // $('#bootstrap-link-old').attr('href', $('#bootstrap-link').attr('href'));
+
     $('#bootstrap-link').attr('href', '/' + data.file_path);
+    $('#download-link').attr('href', '/' + data.file_path);
   }
 };
 
