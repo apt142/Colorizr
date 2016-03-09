@@ -39,7 +39,8 @@ class ThemeMath {
      *
      * @return array
      */
-    public static function getDefaults() {
+    public static function getDefaults()
+    {
         return array(
             'primary' => self::DEFAULT_PRIMARY,
             'info'    => self::DEFAULT_INFO,
@@ -56,7 +57,8 @@ class ThemeMath {
      *
      * @return Color[]
      */
-    public function buildActionPalette($color) {
+    public function buildActionPalette($color)
+    {
         $colorMath = new ColorMath();
         $primary = $colorMath->set($color);
 
@@ -83,7 +85,8 @@ class ThemeMath {
      *
      * @return Color[]
      */
-    public function buildGreyPalette($color = null) {
+    public function buildGreyPalette($color = null)
+    {
         return array(
             'darkest'  => new Color('#000'),
             'darker'   => new Color('#222'),
@@ -107,7 +110,8 @@ class ThemeMath {
      *
      * @return \Colorizr\models\Color
      */
-    public function themeCue($primaryColorString, $roleColorString) {
+    public function themeCue($primaryColorString, $roleColorString)
+    {
         $primary = new \Colorizr\models\Color($primaryColorString);
         $role = new \Colorizr\models\Color($roleColorString);
         $result = new \Colorizr\models\Color('#fff');
@@ -119,9 +123,9 @@ class ThemeMath {
 
         $colorMath->set(
             $result->fromHSL(
-                 $roleHSL->h,
-                 (0.75 * $primaryHSL->s + 12.5), // (50 * 0.25 + $primaryHSL->s * 0.75),
-                 (0.6 * $primaryHSL->l + 20) // (50 * 0.40 + $primaryHSL->l * 0.60)
+                $roleHSL->h,
+                (0.75 * $primaryHSL->s + 12.5),
+                (0.6 * $primaryHSL->l + 20)
             )
         );
 

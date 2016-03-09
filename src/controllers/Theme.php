@@ -63,7 +63,8 @@ class Theme {
      *
      * @return mixed
      */
-    public function buildBootstrap(Request $request, Application $app) {
+    public function buildBootstrap(Request $request, Application $app)
+    {
         // Build bootstrap from the request variables
         $bootstrap = new BootstrapBuilder($app);
 

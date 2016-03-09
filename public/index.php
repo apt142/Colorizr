@@ -41,18 +41,16 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 // Path
 $app->post(
     '/help',
-        function() use($app) {
-            // return $app->redirect('/help');
-            header("Location: http://localhost:8008/help");
-            die;
-            // $app->abort(302, "Ack!");
-        }
+    function () use ($app) {
+        header("Location: http://localhost:8008/help");
+        die;
+    }
 );
 
 // Path
 $app->get(
     '/help',
-    function() use($app) {
+    function () use ($app) {
         $controller = new Colorizr\controllers\Help($app);
         return $app->json($controller->help());
     }
@@ -60,7 +58,7 @@ $app->get(
 
 $app->get(
     '/complementary/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -71,7 +69,7 @@ $app->get(
 
 $app->get(
     '/complementary/{colorString}/{degree}',
-    function($colorString, $degree) use($app) {
+    function ($colorString, $degree) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -82,7 +80,7 @@ $app->get(
 
 $app->get(
     '/adjacent/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -93,7 +91,7 @@ $app->get(
 
 $app->get(
     '/adjacent/{colorString}/{degree}',
-    function($colorString, $degree) use($app) {
+    function ($colorString, $degree) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -104,7 +102,7 @@ $app->get(
 
 $app->get(
     '/triad/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -115,7 +113,7 @@ $app->get(
 
 $app->get(
     '/triad/{colorString}/{degree}',
-    function($colorString, $degree) use($app) {
+    function ($colorString, $degree) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -126,7 +124,7 @@ $app->get(
 
 $app->get(
     '/quadtrad/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -137,7 +135,7 @@ $app->get(
 
 $app->get(
     '/quadtrad/{colorString}/{degree}',
-    function($colorString, $degree) use($app) {
+    function ($colorString, $degree) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -148,7 +146,7 @@ $app->get(
 
 $app->get(
     '/overlay/{colorString}/{filterColor}',
-    function($colorString, $filterColor) use($app) {
+    function ($colorString, $filterColor) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -159,7 +157,7 @@ $app->get(
 
 $app->get(
     '/multiply/{colorString}/{filterColor}',
-    function($colorString, $filterColor) use($app) {
+    function ($colorString, $filterColor) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -170,7 +168,7 @@ $app->get(
 
 $app->get(
     '/screen/{colorString}/{filterColor}',
-    function($colorString, $filterColor) use($app) {
+    function ($colorString, $filterColor) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -182,7 +180,7 @@ $app->get(
 // Greyscale
 $app->get(
     '/greyscale/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -193,7 +191,7 @@ $app->get(
 // In case they want to spell it the other way
 $app->get(
     '/grayscale/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -205,7 +203,7 @@ $app->get(
 // In case they want to spell it the other way
 $app->get(
     '/normalize/{colorString}/{$intensity}',
-    function($colorString, $intensity) use($app) {
+    function ($colorString, $intensity) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -216,7 +214,7 @@ $app->get(
 
 $app->get(
     '/lighten/{colorString}/{percent}',
-    function($colorString, $percent) use($app) {
+    function ($colorString, $percent) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -227,7 +225,7 @@ $app->get(
 
 $app->get(
     '/darken/{colorString}/{percent}',
-    function($colorString, $percent) use($app) {
+    function ($colorString, $percent) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -238,7 +236,7 @@ $app->get(
 
 $app->get(
     '/saturate/{colorString}/{percent}',
-    function($colorString, $percent) use($app) {
+    function ($colorString, $percent) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -249,7 +247,7 @@ $app->get(
 
 $app->get(
     '/desaturate/{colorString}/{percent}',
-    function($colorString, $percent) use($app) {
+    function ($colorString, $percent) use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -260,7 +258,7 @@ $app->get(
 
 $app->get(
     '/random',
-    function() use($app) {
+    function () use ($app) {
         $controller = new Colorizr\controllers\Color(
             $app,
             new \Colorizr\lib\ColorMath()
@@ -271,44 +269,44 @@ $app->get(
 
 $app->get(
     '/theme/{colorString}',
-        function($colorString) use($app) {
-            $controller = new Colorizr\controllers\Color(
-                $app,
-                new \Colorizr\lib\ColorMath()
-            );
-            return $app->json($controller->theme($colorString));
-        }
+    function ($colorString) use ($app) {
+        $controller = new Colorizr\controllers\Color(
+            $app,
+            new \Colorizr\lib\ColorMath()
+        );
+        return $app->json($controller->theme($colorString));
+    }
 );
 
 
 $app->get(
     '/',
-    function() use($app) {
+    function () use ($app) {
         $controller = new Colorizr\controllers\Theme();
         $vars = $controller->themeCues();
         return $app['twig']->render(
-                           'theme-cues.twig',
-                               $vars
+            'theme-cues.twig',
+            $vars
         );
     }
 );
 
 $app->get(
     '/theme-cue',
-        function() use($app) {
-            $controller = new Colorizr\controllers\Theme();
-            $vars = $controller->themeCues();
+    function () use ($app) {
+        $controller = new Colorizr\controllers\Theme();
+        $vars = $controller->themeCues();
 
-            return $app['twig']->render(
-                'theme-cues.twig',
-                $vars
-            );
-        }
+        return $app['twig']->render(
+            'theme-cues.twig',
+            $vars
+        );
+    }
 );
 
 $app->get(
     '/theme-cue/{colorString}',
-    function($colorString) use($app) {
+    function ($colorString) use ($app) {
         $controller = new Colorizr\controllers\Theme();
         $vars = $controller->themeCues($colorString);
 
@@ -321,10 +319,10 @@ $app->get(
 
 $app->post(
     '/build/bootstrap',
-     function (Request $request) use ($app) {
-         $controller = new Colorizr\controllers\Theme();
-         return $controller->buildBootstrap($request, $app);
-     }
+    function (Request $request) use ($app) {
+        $controller = new Colorizr\controllers\Theme();
+        return $controller->buildBootstrap($request, $app);
+    }
 );
 
 

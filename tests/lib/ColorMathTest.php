@@ -28,7 +28,8 @@ use Colorizr\lib\ColorMath;
  */
 class ColorMathTest extends \PHPUnit_Framework_TestCase {
 
-    public function dataTestSet() {
+    public function dataTestSet()
+    {
         return array(
             array(
                 '#fff',
@@ -50,7 +51,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
      *
      * @dataProvider dataTestSet
      */
-    public function testSet($colorString, $colorArray) {
+    public function testSet($colorString, $colorArray)
+    {
         $colorMath = new ColorMath();
 
         $color = $colorMath->set($colorString);
@@ -64,7 +66,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the darken command
      */
-    public function testDarken() {
+    public function testDarken()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#fff');
         $color = $colorMath->darken(10);
@@ -78,7 +81,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the lighten command
      */
-    public function testLighten() {
+    public function testLighten()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#ccc');
         $color = $colorMath->lighten(10);
@@ -92,7 +96,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the greyscale command
      */
-    public function testGreyscale() {
+    public function testGreyscale()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#FA3');
         $color = $colorMath->greyscale();
@@ -106,7 +111,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the saturate command
      */
-    public function testSaturate() {
+    public function testSaturate()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#FA3');
         $color = $colorMath->saturate(50);
@@ -120,7 +126,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the saturate command
      */
-    public function testDesaturate() {
+    public function testDesaturate()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#FA3');
         $color = $colorMath->desaturate(50);
@@ -134,7 +141,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the multiply command
      */
-    public function testMultiply() {
+    public function testMultiply()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->multiply('#999999');
@@ -144,7 +152,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the multiply command
      */
-    public function testScreen() {
+    public function testScreen()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->screen('#999999');
@@ -154,7 +163,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the multiply command
      */
-    public function testOverlay() {
+    public function testOverlay()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->overlay('#999999');
@@ -173,7 +183,8 @@ class ColorMathTest extends \PHPUnit_Framework_TestCase {
     /**
      * Test the complementary
      */
-    public function testComplimentary() {
+    public function testComplimentary()
+    {
         $colorMath = new ColorMath();
         $colorMath->set('#ff6600');
         $color = $colorMath->complementary();

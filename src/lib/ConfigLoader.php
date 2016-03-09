@@ -26,7 +26,8 @@ namespace Colorizr\lib;
  * @link     http://g.lonefry.com
  */
 class ConfigLoader {
-    public static function loadConfig($config) {
+    public static function loadConfig($config)
+    {
         $vars = null;
 
         $filename = __DIR__ . '/../config/' . $config . '.php';

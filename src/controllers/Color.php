@@ -380,7 +380,8 @@ class Color {
      *
      * @return array
      */
-    public function theme($colorString) {
+    public function theme($colorString)
+    {
         $result = null;
 
         if ($this->validateColorString($colorString)) {

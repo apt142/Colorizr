@@ -33,7 +33,7 @@ function run_lint() {
 
 function run_sniff() {
     echo "\n * Sniffing files\n";
-    passthru('./vendor/bin/phpcs --standard=./phpcs.xml src/');
+    passthru('./vendor/bin/phpcs --standard=./phpcs.xml src/ public/');
 }
 
 function run_server() {

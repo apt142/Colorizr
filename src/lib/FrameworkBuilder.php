@@ -60,7 +60,8 @@ class FrameworkBuilder {
      * @param Application $app Application object
      *
      */
-    public function __construct(Application $app) {
+    public function __construct(Application $app)
+    {
         $this->app = $app;
     }
 
@@ -69,7 +70,8 @@ class FrameworkBuilder {
      *
      * @return \Colorizr\models\Color[]
      */
-    public function getPalette() {
+    public function getPalette()
+    {
         return $this->palette;
     }
 
@@ -80,7 +82,8 @@ class FrameworkBuilder {
      *
      * @return \Colorizr\models\Color[]
      */
-    protected function buildPalette(Request $request) {
+    protected function buildPalette(Request $request)
+    {
         $defaults = ThemeMath::getDefaults();
 
         $primary = $request->request->get('primary', $defaults['primary']);
@@ -105,7 +108,8 @@ class FrameworkBuilder {
      *
      * @return \Colorizr\models\Color[]
      */
-    protected function buildGreyScale() {
+    protected function buildGreyScale()
+    {
         $themeMath = new ThemeMath();
 
         return $themeMath->buildGreyPalette();
@@ -118,7 +122,8 @@ class FrameworkBuilder {
      *
      * @return array
      */
-    protected function buildFontOptions(Request $request) {
+    protected function buildFontOptions(Request $request)
+    {
         $greys = $this->buildGreyScale();
 
         $bodyColor = $request->request->get('body-color', '#fff');
@@ -144,7 +149,8 @@ class FrameworkBuilder {
      *
      * @return array
      */
-    protected function buildPresentationOptions(Request $request) {
+    protected function buildPresentationOptions(Request $request)
+    {
         return array(
             'border_radius' => $request->request->get('border-radius', '4px')
         );
@@ -157,7 +163,8 @@ class FrameworkBuilder {
      *
      * @return array
      */
-    protected function getOptions(Request $request) {
+    protected function getOptions(Request $request)
+    {
         $this->palette      = $this->buildPalette($request);
         $this->greyScale    = $this->buildGreyScale();
         $this->font         = $this->buildFontOptions($request);
@@ -182,7 +189,8 @@ class FrameworkBuilder {
      *
      * @return string
      */
-    public function build(Request $request) {
+    public function build(Request $request)
+    {
         // Build variables for the template into an array
         $options  = $this->getOptions($request);
         $filePath = $this->getFilePath() . '/' . $this->fileName;
@@ -207,7 +215,8 @@ class FrameworkBuilder {
      *
      * @return mixed
      */
-    protected function compile($sassCode) {
+    protected function compile($sassCode)
+    {
         $scss = new Compiler();
         $scss->setImportPaths($this->importPath);
 
@@ -221,7 +230,8 @@ class FrameworkBuilder {
      *
      * @return string location
      */
-    public function createVariableFile(array $options) {
+    public function createVariableFile(array $options)
+    {
         $contents = $this->app['twig']->render(
             $this->varTemplate,
             $options
@@ -237,7 +247,8 @@ class FrameworkBuilder {
      *
      * @return string
      */
-    protected function setUniqueId($options) {
+    protected function setUniqueId($options)
+    {
         $this->uniqueId = md5(serialize($options));
     }
 
@@ -248,7 +259,8 @@ class FrameworkBuilder {
      *
      * @return bool
      */
-    protected function save($contents) {
+    protected function save($contents)
+    {
         $path = $this->createPath($this->uniqueId);
         file_put_contents(
             WEB_ROOT . '/' . $path . '/' . $this->fileName,
@@ -262,7 +274,8 @@ class FrameworkBuilder {
      *
      * @return string
      */
-    protected function createPath() {
+    protected function createPath()
+    {
         $path = $this->getFilePath();
         if (!is_dir(WEB_ROOT . '/' . $path)) {
             mkdir(WEB_ROOT . '/' . $path, 0777, true);
@@ -276,7 +289,8 @@ class FrameworkBuilder {
      *
      * @return string
      */
-    protected function getFilePath() {
+    protected function getFilePath()
+    {
         $dirs = str_split($this->uniqueId, 4);
         $path =  $this->savePath . implode('/', $dirs);
         return $path;
