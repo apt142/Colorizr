@@ -7,6 +7,25 @@
   margin: 10px 0;
   vertical-align: top;
 }
+.configuration-section .primary-variants .swatch {
+  width: 14%;
+  float: left;
+  margin-right: 0;
+  margin-left: 0;
+  border: solid 1px #f7f7f7;
+}
+.configuration-section .primary-variants .swatch .swatch-color {
+  height: 50px;
+  padding: 5px 0;
+}
+.configuration-section .primary-variants .swatch .swatch-color .swatch-color-label {
+  font-size: 1em;
+}
+.configuration-section .primary-variants:after {
+  display: table;
+  content: "";
+  clear: both;
+}
 .configuration-section .swatch {
   border: solid 1px #ccc;
   border-radius: 4px;

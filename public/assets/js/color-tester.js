@@ -71,10 +71,20 @@ $(document).ready(function () {
     color = color.replace('#', '');
 
     $.get('/theme/' + color, {}, function (data) {
+      // Palette
       colorSwatch('.success-swatch', data.success);
       colorSwatch('.info-swatch', data.info);
       colorSwatch('.warning-swatch', data.warning);
       colorSwatch('.danger-swatch', data.danger);
+
+      // Shades
+      colorSwatch('.dark-50', tinycolor(color).darken(50).toString());
+      colorSwatch('.dark-20', tinycolor(color).darken(20).toString());
+      colorSwatch('.dark-10', tinycolor(color).darken(10).toString());
+      colorSwatch('.exact', tinycolor(color).toString());
+      colorSwatch('.light-10', tinycolor(color).lighten(10).toString());
+      colorSwatch('.light-20', tinycolor(color).lighten(20).toString());
+      colorSwatch('.light-50', tinycolor(color).lighten(50).toString());
 
       $('#success').val(data.success);
       $('#info').val(data.info);

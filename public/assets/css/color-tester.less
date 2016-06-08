@@ -16,6 +16,32 @@
     #sample-rgb {}
   }
 
+  .primary-variants {
+    .swatch {
+      width: 14%;
+      float: left;
+      margin-right: 0;
+      margin-left: 0;
+      border: solid 1px #f7f7f7;
+
+      .swatch-color {
+        height: 50px;
+        padding: 5px 0;
+
+        .swatch-color-label {
+          font-size: 1em;
+        }
+      }
+    }
+
+  }
+
+  .primary-variants:after {
+    display: table;
+    content: "";
+    clear: both;
+  }
+
   .swatch {
     border: solid 1px #ccc;
     border-radius: 4px;

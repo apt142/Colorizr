@@ -99,6 +99,12 @@ return array(
         'family' => 'Roboto, sans-serif',
         'type'   => 'sans-serif',
         'url'    => 'https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic'
+    ),
+    array(
+        'name'   => 'Montserrat',
+        'family' => 'Montserrat, sans-serif',
+        'type'   => 'sans-serif',
+        'url'    => 'https://fonts.googleapis.com/css?family=Montserrat:400,700'
     )
 
     // Guides
